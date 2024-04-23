@@ -1,11 +1,11 @@
 package org.example.bookstore.service.impl;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.example.bookstore.dto.BookDto;
 import org.example.bookstore.dto.CreateBookRequestDto;
+import org.example.bookstore.exception.EntityNotFoundException;
 import org.example.bookstore.mapper.BookMapper;
 import org.example.bookstore.model.Book;
 import org.example.bookstore.repository.BookRepository;
@@ -26,12 +26,15 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> findAll() {
-        Optional<List<Book>> booksOptional = Optional.ofNullable(bookRepository.findAll());
-        return booksOptional
-                .map(books -> books.stream()
-                        .map(bookMapper::toDto)
-                        .toList())
-                .orElse(Collections.emptyList());
+        List<Book> books = bookRepository.findAll();
+        Optional<List<Book>> optionalBooks = Optional.ofNullable(books);
+        if (optionalBooks.isEmpty()) {
+            throw new EntityNotFoundException("Can't find any books");
+        }
+        return optionalBooks.get()
+                .stream()
+                .map(bookMapper::toDto)
+                .toList();
     }
 
     @Override
