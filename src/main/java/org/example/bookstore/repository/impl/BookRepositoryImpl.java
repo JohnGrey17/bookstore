@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.example.bookstore.exception.DataProcessingException;
+import org.example.bookstore.exception.EntityNotFoundException;
 import org.example.bookstore.model.Book;
 import org.example.bookstore.repository.BookRepository;
 import org.springframework.stereotype.Repository;
@@ -31,7 +31,7 @@ public class BookRepositoryImpl implements BookRepository {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't save book " + book, e);
+            throw new EntityNotFoundException("Can't save book " + book, e);
         } finally {
             if (entityManager != null) {
                 entityManager.close();
@@ -44,7 +44,16 @@ public class BookRepositoryImpl implements BookRepository {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             return entityManager.createQuery("FROM Book", Book.class).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find any book ", e);
+            throw new EntityNotFoundException("Can't find any book ", e);
+        }
+    }
+
+    @Override
+    public Book getBookById(Long id) {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            return entityManager.find(Book.class,id);
+        } catch (Exception e) {
+            throw new EntityNotFoundException("can`t find book with that id " + id,e);
         }
     }
 }
