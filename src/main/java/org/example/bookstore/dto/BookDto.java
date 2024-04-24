@@ -1,13 +1,9 @@
 package org.example.bookstore.dto;
 
 import java.math.BigDecimal;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
-@ToString
-@Getter
-@Setter
+@Data
 public class BookDto {
     private long id;
     private String title;
