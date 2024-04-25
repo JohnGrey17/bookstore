@@ -4,11 +4,13 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.example.bookstore.dto.BookDto;
 import org.example.bookstore.dto.CreateBookRequestDto;
+import org.example.bookstore.model.Book;
 import org.example.bookstore.service.BookService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,5 +36,9 @@ public class BookControllerImpl {
     @PostMapping
     public BookDto createBook(@RequestBody CreateBookRequestDto requestDto) {
         return bookService.save(requestDto);
+    }
+    @PutMapping("/{id}")
+    public Book updateBookById(@PathVariable Long id,@RequestBody BookDto book) {
+        return bookService.updateBookById(id,book);
     }
 }

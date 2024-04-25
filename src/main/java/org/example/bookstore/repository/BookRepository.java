@@ -1,13 +1,11 @@
 package org.example.bookstore.repository;
 
-import java.util.List;
+import org.example.bookstore.dto.BookDto;
 import org.example.bookstore.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface BookRepository extends JpaRepository<Book,Long> {
-    Book save(Book book);
 
-    List<Book> findAll();
-
-    Book getBookById(Long id);
 }
