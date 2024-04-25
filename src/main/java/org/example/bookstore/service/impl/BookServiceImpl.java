@@ -11,7 +11,6 @@ import org.example.bookstore.service.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -55,7 +54,11 @@ public class BookServiceImpl implements BookService {
         if (updatedBookDto.getDescription() != null && !updatedBookDto.getDescription().isEmpty()) {
             existingBook.setDescription(updatedBookDto.getDescription());
         }
-
         return bookRepository.save(existingBook);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        bookRepository.deleteById(id);
     }
 }
