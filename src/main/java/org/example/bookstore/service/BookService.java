@@ -1,8 +1,6 @@
 package org.example.bookstore.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.example.bookstore.dto.BookDto;
 import org.example.bookstore.dto.CreateBookRequestDto;
 import org.example.bookstore.model.Book;
