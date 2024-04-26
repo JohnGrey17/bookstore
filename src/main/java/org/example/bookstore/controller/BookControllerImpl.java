@@ -4,7 +4,6 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.example.bookstore.dto.BookDto;
 import org.example.bookstore.dto.CreateBookRequestDto;
-import org.example.bookstore.model.Book;
 import org.example.bookstore.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -42,7 +41,7 @@ public class BookControllerImpl {
     }
 
     @PutMapping("/{id}")
-    public Book updateBookById(@PathVariable Long id,@RequestBody BookDto book) {
+    public BookDto updateBookById(@PathVariable Long id,@RequestBody CreateBookRequestDto book) {
         return bookService.updateBookById(id,book);
     }
 
