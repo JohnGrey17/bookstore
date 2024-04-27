@@ -7,15 +7,15 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TitleSpecificationProvide implements SpecificationProvider<Book> {
+public class AuthorSpecificationProvider implements SpecificationProvider<Book> {
 
     @Override
     public String getKey() {
-        return "title";
+        return "author";
     }
 
     public Specification<Book> getSpecification(String[] params) {
         return (root, query, criteriaBuilder) ->
-                root.get("title").in(Arrays.stream(params).toArray());
+                root.get("author").in(Arrays.stream(params).toArray());
     }
 }
