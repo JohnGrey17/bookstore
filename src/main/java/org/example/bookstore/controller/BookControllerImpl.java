@@ -41,7 +41,8 @@ public class BookControllerImpl {
     }
 
     @PutMapping("/{id}")
-    public BookDto updateBookById(@PathVariable Long id,@RequestBody BookRequestDto book) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public BookDto updateBookById(@PathVariable Long id,@Valid @RequestBody BookRequestDto book) {
         return bookService.updateBookById(id,book);
     }
 

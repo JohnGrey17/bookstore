@@ -19,16 +19,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    protected ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDate.now());
-        body.put("status", HttpStatus.NOT_FOUND);
-        body.put("error", "Entity not found");
-        body.put("message", ex.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
-    }
-
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
@@ -39,19 +29,43 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDate.now());
         body.put("status", HttpStatus.BAD_REQUEST);
-        List<String> errors = ex.getBindingResult().getAllErrors().stream()
-                .map(this::getErrorMassege)
+        List<String> errors = ex.getBindingResult()
+                .getAllErrors().stream()
+                .map(this::getErrorMassage)
                 .toList();
         body.put("errors", errors);
         return new ResponseEntity<>(body, headers, status);
     }
 
-    private String getErrorMassege(ObjectError e) {
+    private String getErrorMassage(ObjectError e) {
         if (e instanceof FieldError) {
             String field = ((FieldError) e).getField();
             String message = e.getDefaultMessage();
             return field + " " + message;
         }
         return e.getDefaultMessage();
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    protected ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        Map<String, Object> body = createErrorMessageBody(status, ex.getMessage());
+        return new ResponseEntity<>(body, status);
+    }
+
+    @ExceptionHandler(InvalidPriceException.class)
+    protected ResponseEntity<Object> handleInvalidPriceException(InvalidPriceException ex) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        Map<String, Object> body = createErrorMessageBody(status, ex.getMessage());
+        return new ResponseEntity<>(body, status);
+    }
+
+    private Map<String, Object> createErrorMessageBody(HttpStatus status, String errorMessage) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDate.now());
+        body.put("status", status);
+        body.put("error", status.getReasonPhrase());
+        body.put("message", errorMessage);
+        return body;
     }
 }

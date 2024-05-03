@@ -44,7 +44,6 @@ public class BookServiceImpl implements BookService {
         Book existingBook = bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Book not found with id: " + id));
-
         if (updatedBookDto == null) {
             throw new EntityNotFoundException("please provide update details ");
         }
