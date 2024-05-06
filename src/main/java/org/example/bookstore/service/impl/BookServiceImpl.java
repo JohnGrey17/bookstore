@@ -60,4 +60,9 @@ public class BookServiceImpl implements BookService {
     public void deleteById(Long id) {
         bookRepository.deleteById(id);
     }
+
+    @Override
+    public boolean isIsbnExists(String isbn) {
+        return bookRepository.existsByIsbn(isbn);
+    }
 }
