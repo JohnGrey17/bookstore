@@ -5,6 +5,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.example.bookstore.dto.BookDto;
 import org.example.bookstore.dto.BookRequestDto;
+import org.example.bookstore.dto.BookSearchParameters;
 import org.example.bookstore.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +26,7 @@ public class BookControllerImpl {
     private final BookService bookService;
 
     @GetMapping
-    public List<BookDto> getAll() {
+    public List<BookDto> findAll() {
         return bookService.findAll();
     }
 
@@ -37,13 +38,18 @@ public class BookControllerImpl {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BookDto createBook(@RequestBody @Valid BookRequestDto requestDto) {
-        return bookService.save(requestDto);
+        return bookService.create(requestDto);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public BookDto updateBookById(@PathVariable Long id,@Valid @RequestBody BookRequestDto book) {
         return bookService.updateBookById(id,book);
+    }
+
+    @GetMapping("/search")
+    public List<BookDto> search(BookSearchParameters searchParameters) {
+        return bookService.search(searchParameters);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

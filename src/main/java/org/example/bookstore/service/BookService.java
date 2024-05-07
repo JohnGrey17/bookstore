@@ -3,9 +3,10 @@ package org.example.bookstore.service;
 import java.util.List;
 import org.example.bookstore.dto.BookDto;
 import org.example.bookstore.dto.BookRequestDto;
+import org.example.bookstore.dto.BookSearchParameters;
 
 public interface BookService {
-    BookDto save(BookRequestDto requestDto);
+    BookDto create(BookRequestDto requestDto);
 
     List<BookDto> findAll();
 
@@ -15,5 +16,5 @@ public interface BookService {
 
     void deleteById(Long id);
 
-    boolean isIsbnExists(String isbn);
+    List<BookDto> search(BookSearchParameters parameters);
 }

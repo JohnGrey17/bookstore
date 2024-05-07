@@ -18,6 +18,7 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
+                    unique: false
               - column:
                   name: author
                   type: varchar(255)
