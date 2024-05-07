@@ -1,6 +1,7 @@
 package org.example.bookstore.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/books")
+@Tag(name = "Book Controller", description = "This controller handles requests "
+        + "and responses related to books in the database")
 public class BookControllerImpl {
 
     private final BookService bookService;
