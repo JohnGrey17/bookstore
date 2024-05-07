@@ -3,8 +3,8 @@ package org.example.bookstore.service.impl;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.example.bookstore.dto.BookDto;
+import org.example.bookstore.dto.BookRequestDto;
 import org.example.bookstore.dto.BookSearchParameters;
-import org.example.bookstore.dto.CreateBookRequestDto;
 import org.example.bookstore.exception.EntityNotFoundException;
 import org.example.bookstore.mapper.BookMapper;
 import org.example.bookstore.model.Book;
@@ -22,7 +22,7 @@ public class BookServiceImpl implements BookService {
     private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Override
-    public BookDto save(CreateBookRequestDto requestDto) {
+    public BookDto save(BookRequestDto requestDto) {
         Book book = bookMapper.toModel(requestDto);
         return bookMapper.toDto(bookRepository.save(book));
     }
@@ -44,7 +44,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto updateBookById(Long id, CreateBookRequestDto updatedBookDto) {
+    public BookDto updateBookById(Long id, BookRequestDto updatedBookDto) {
         Book existingBook = bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Book not found with id: " + id));
