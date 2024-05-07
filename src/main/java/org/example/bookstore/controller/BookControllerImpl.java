@@ -1,14 +1,11 @@
 package org.example.bookstore.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.example.bookstore.dto.BookDto;
 import org.example.bookstore.dto.BookRequestDto;
 import org.example.bookstore.service.BookService;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,6 +51,11 @@ public class BookControllerImpl {
             + "by id with valid parameters")
     public BookDto updateBookById(@PathVariable Long id, @Valid @RequestBody BookRequestDto book) {
         return bookService.updateBookById(id, book);
+    }
+
+    @GetMapping("/search")
+    public List<BookDto> search(BookSearchParameters searchParameters) {
+        return bookService.search(searchParameters);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

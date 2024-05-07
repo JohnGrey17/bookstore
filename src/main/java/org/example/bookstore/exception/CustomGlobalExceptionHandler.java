@@ -53,13 +53,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(body, status);
     }
 
-    @ExceptionHandler(InvalidPriceException.class)
-    protected ResponseEntity<Object> handleInvalidPriceException(InvalidPriceException ex) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        Map<String, Object> body = createErrorMessageBody(status, ex.getMessage());
-        return new ResponseEntity<>(body, status);
-    }
-
     private Map<String, Object> createErrorMessageBody(HttpStatus status, String errorMessage) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDate.now());
