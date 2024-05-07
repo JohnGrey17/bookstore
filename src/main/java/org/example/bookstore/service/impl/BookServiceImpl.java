@@ -8,8 +8,11 @@ import org.example.bookstore.dto.BookSearchParameters;
 import org.example.bookstore.exception.EntityNotFoundException;
 import org.example.bookstore.mapper.BookMapper;
 import org.example.bookstore.model.Book;
-import org.example.bookstore.repository.BookRepository;
+import org.example.bookstore.repository.book.BookRepository;
+import org.example.bookstore.repository.book.BookSpecificationBuilder;
 import org.example.bookstore.service.BookService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -30,7 +33,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> findAll() {
+    public List<BookDto> findAll(Pageable pageable) {
         return bookRepository.findAll().stream()
                 .map(bookMapper::toDto)
                 .toList();
@@ -64,7 +67,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> search(BookSearchParameters parameters) {
+    public List<BookDto> search(BookSearchParameters parameters,Pageable pageable) {
         Specification<Book> bookSpecification = bookSpecificationBuilder.build(parameters);
         return bookRepository.findAll(bookSpecification).stream()
                 .map(bookMapper::toDto)
@@ -75,4 +78,5 @@ public class BookServiceImpl implements BookService {
     public void deleteById(Long id) {
         bookRepository.deleteById(id);
     }
+
 }
