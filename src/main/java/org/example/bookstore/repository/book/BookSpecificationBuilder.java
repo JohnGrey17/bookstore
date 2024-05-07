@@ -12,22 +12,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class BookSpecificationBuilder implements SpecificationBuilder<Book> {
 
+    private static final String TITLE = "title";
+    private static final String AUTHOR = "author";
+
     private final SpecificationProviderManager<Book> bookSpecificationProviderManager;
 
     @Override
     public Specification<Book> build(BookSearchParameters searchParameters) {
-        Specification<Book> spec = Specification.where(null);
+        Specification<Book> specification = Specification.where(null);
+        specification = addSpecification(specification, searchParameters.author(), AUTHOR);
+        specification = addSpecification(specification, searchParameters.title(),TITLE);
 
-        if (searchParameters.title() != null && searchParameters.title().length > 0) {
-            spec = spec.and(bookSpecificationProviderManager
-                    .getSpecificationProvider("title")
-                    .getSpecification(searchParameters.title()));
+        return specification;
+    }
+
+    private Specification<Book> addSpecification(Specification<Book> specification,
+                                                 String[] values, String field) {
+        if (values != null && values.length > 0) {
+            specification = specification.and(bookSpecificationProviderManager
+                    .getSpecificationProvider(field)
+                    .getSpecification(values));
         }
-        if (searchParameters.author() != null && searchParameters.author().length > 0) {
-            spec = spec.and(bookSpecificationProviderManager
-                    .getSpecificationProvider("author")
-                    .getSpecification(searchParameters.author()));
-        }
-        return spec;
+        return specification;
     }
 }
