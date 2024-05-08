@@ -1,5 +1,6 @@
 package org.example.bookstore.service.impl;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.example.bookstore.dto.BookDto;
 import org.example.bookstore.dto.BookRequestDto;
@@ -13,8 +14,6 @@ import org.example.bookstore.service.BookService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -77,8 +76,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteById(Long id) {
-        bookRepository.findById(id).
-                orElseThrow(() -> new EntityNotFoundException(
+        bookRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
                         "Book not found with id: " + id));
         bookRepository.deleteById(id);
     }

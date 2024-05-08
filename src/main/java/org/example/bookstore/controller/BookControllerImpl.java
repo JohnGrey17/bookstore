@@ -56,6 +56,7 @@ public class BookControllerImpl {
     public BookDto updateBookById(@PathVariable Long id, @Valid @RequestBody BookRequestDto book) {
         return bookService.updateBookById(id, book);
     }
+
     @Operation(summary = "Search books", description = "Search for books based"
             + " on specified parameters.")
     @GetMapping("/search")
