@@ -18,6 +18,10 @@ public class UserRegistrationRequestDto {
     @NotBlank
     @Length(min = 4,max = 32)
     private String repeatPassword;
+    private String firstName;
+    private String lastName;
+    private String shippingAddress;
+
     @AssertTrue(message = "Password and repeat password must match")
     public boolean isPasswordMatch() {
         return password.equals(repeatPassword);
