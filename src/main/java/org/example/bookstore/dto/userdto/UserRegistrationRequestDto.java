@@ -1,14 +1,15 @@
 package org.example.bookstore.dto.userdto;
 
-import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import org.example.bookstore.validator.FieldMatch;
 import org.hibernate.validator.constraints.Length;
 
+@FieldMatch(first = "password",second = "repeatPassword",
+        message = "Password and repeatPassword should match")
 @Data
 public class UserRegistrationRequestDto {
-
     @NotBlank
     @Email
     private String email;
@@ -21,9 +22,4 @@ public class UserRegistrationRequestDto {
     private String firstName;
     private String lastName;
     private String shippingAddress;
-
-    @AssertTrue(message = "Password and repeat password must match")
-    public boolean isPasswordMatch() {
-        return password.equals(repeatPassword);
-    }
 }

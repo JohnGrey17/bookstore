@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.example.bookstore.dto.bookdto.BookRegistrationRequestDto;
+import org.example.bookstore.dto.bookdto.BookRequestDto;
 import org.example.bookstore.dto.bookdto.BookResponseDto;
 import org.example.bookstore.dto.bookdto.BookSearchParameters;
 import org.example.bookstore.service.book.BookService;
@@ -45,7 +45,7 @@ public class BookControllerImpl {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create book", description = "Create book with parameters in DB")
-    public BookResponseDto createBook(@RequestBody @Valid BookRegistrationRequestDto requestDto) {
+    public BookResponseDto createBook(@RequestBody @Valid BookRequestDto requestDto) {
         return bookService.create(requestDto);
     }
 
@@ -54,7 +54,7 @@ public class BookControllerImpl {
     @Operation(summary = "Update book by id", description = "Update existing book "
             + "by id with valid parameters")
     public BookResponseDto updateBookById(@PathVariable Long id,
-                                          @Valid @RequestBody BookRegistrationRequestDto book) {
+                                          @Valid @RequestBody BookRequestDto book) {
         return bookService.updateBookById(id, book);
     }
 

@@ -2,7 +2,7 @@ package org.example.bookstore.service.impl.book;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.example.bookstore.dto.bookdto.BookRegistrationRequestDto;
+import org.example.bookstore.dto.bookdto.BookRequestDto;
 import org.example.bookstore.dto.bookdto.BookResponseDto;
 import org.example.bookstore.dto.bookdto.BookSearchParameters;
 import org.example.bookstore.exception.EntityNotFoundException;
@@ -23,7 +23,7 @@ public class BookServiceImpl implements BookService {
     private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Override
-    public BookResponseDto create(BookRegistrationRequestDto requestDto) {
+    public BookResponseDto create(BookRequestDto requestDto) {
         String isbn = requestDto.getIsbn();
         if (isbn != null && bookRepository.findByIsbn(isbn).isPresent()) {
             throw new EntityNotFoundException("Book with ISBN " + isbn + " already exists.");
@@ -49,7 +49,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookResponseDto updateBookById(Long id, BookRegistrationRequestDto updatedBookDto) {
+    public BookResponseDto updateBookById(Long id, BookRequestDto updatedBookDto) {
         Book existingBook = bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Book not found with id: " + id));
