@@ -9,15 +9,11 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Getter
 @Setter
 @ToString
-@SQLDelete(sql = "UPDATE users SET is_deleted = true WHERE id = ?")
-@SQLRestriction(value = "is_deleted=false")
 @Table(name = "users")
 public class User {
     @Id
@@ -32,5 +28,4 @@ public class User {
     @Column(nullable = false)
     private String lastName;
     private String shippingAddress;
-    private boolean isDeleted = false;
 }

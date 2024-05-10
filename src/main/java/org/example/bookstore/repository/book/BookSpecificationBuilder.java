@@ -14,17 +14,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class BookSpecificationBuilder implements SpecificationBuilder<Book> {
 
-    private final AuthorSpecificationProvider authorSpecificationProvider;
-    private final TitleSpecificationProvider titleSpecificationProvider;
     private final SpecificationProviderManager<Book> bookSpecificationProviderManager;
 
     @Override
     public Specification<Book> build(BookSearchParameters searchParameters) {
         Specification<Book> specification = Specification.where(null);
         specification = addSpecification(specification, searchParameters.author(),
-                authorSpecificationProvider.getKey());
+                AuthorSpecificationProvider.AUTHOR);
         specification = addSpecification(specification, searchParameters.title(),
-                titleSpecificationProvider.getKey());
+                TitleSpecificationProvider.TITLE);
 
         return specification;
     }
