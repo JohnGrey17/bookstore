@@ -1,4 +1,4 @@
-package org.example.bookstore.dto;
+package org.example.bookstore.dto.bookdto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.DecimalMin;
