@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 05-insert-users-into-users-table.yaml
+      author: Serj
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: email,value: "alice@example.com" }
+              - column: { name: password,value: "$2a$10$M8fo3yLp9DHI3tRF2Z8rc.Pu69CdQr8gMTufdejfRHQeJ13zG0CnC" }
+              - column: { name: first_name,value: "alice"}
+              - column: { name: last_name,value: "alicovich"}
+              - column: { name: shipping_address,value: "Stepana Bandery st."}
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: email,value: "john@example.com" }
+              - column: { name: password,value: "$2a$10$M8fo3yLp9DHI3tRF2Z8rc.Pu69CdQr8gMTufdejfRHQeJ13zG0CnC" }
+              - column: { name: first_name,value: "john" }
+              - column: { name: last_name,value: "jonovich" }
+              - column: { name: shipping_address,value: "near with Stepana Bandery st." }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: email,value: "bob@example.com" }
+              - column: { name: password,value: "$2a$10$M8fo3yLp9DHI3tRF2Z8rc.Pu69CdQr8gMTufdejfRHQeJ13zG0CnC" }
+              - column: { name: first_name,value: "bob" }
+              - column: { name: last_name,value: "bobovich" }
+              - column: { name: shipping_address,value: "Anty kazapskaya st." }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: email,value: "admin@example.com" }
+              - column: { name: password,value: "$2a$10$M8fo3yLp9DHI3tRF2Z8rc.Pu69CdQr8gMTufdejfRHQeJ13zG0CnC" }
+              - column: { name: first_name,value: "admin" }
+              - column: { name: last_name,value: "admin" }
+              - column: { name: shipping_address,value: "mate academy" }
