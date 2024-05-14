@@ -32,7 +32,7 @@ public class BookControllerImpl {
     private final BookService bookService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @Operation(summary = "Get all books", description = "Get all existing books from DB")
     public List<BookResponseDto> getAllBooks(Pageable pageable) {
         return bookService.findAll(pageable);
@@ -64,7 +64,7 @@ public class BookControllerImpl {
     }
 
     @GetMapping("/search")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @Operation(summary = "Search books", description = "Search for books based"
             + " on specified parameters.")
     public List<BookResponseDto> search(BookSearchParameters searchParameters, Pageable pageable) {
