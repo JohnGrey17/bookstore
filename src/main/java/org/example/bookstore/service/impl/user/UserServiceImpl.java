@@ -1,5 +1,6 @@
 package org.example.bookstore.service.impl.user;
 
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.example.bookstore.dto.userdto.UserRegistrationRequestDto;
 import org.example.bookstore.dto.userdto.UserResponseDto;
@@ -12,8 +13,6 @@ import org.example.bookstore.repository.user.UserRepository;
 import org.example.bookstore.service.user.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
