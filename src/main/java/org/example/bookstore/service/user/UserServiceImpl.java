@@ -1,4 +1,4 @@
-package org.example.bookstore.service.impl.user;
+package org.example.bookstore.service.user;
 
 import java.util.Set;
 import lombok.RequiredArgsConstructor;

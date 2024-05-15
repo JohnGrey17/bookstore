@@ -1,4 +1,4 @@
-package org.example.bookstore.service.impl.book;
+package org.example.bookstore.service.book;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
