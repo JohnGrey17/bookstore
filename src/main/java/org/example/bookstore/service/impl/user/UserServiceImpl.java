@@ -1,13 +1,18 @@
 package org.example.bookstore.service.impl.user;
 
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.example.bookstore.dto.userdto.UserRegistrationRequestDto;
 import org.example.bookstore.dto.userdto.UserResponseDto;
 import org.example.bookstore.exception.RegistrationException;
 import org.example.bookstore.mapper.UserMapper;
+import org.example.bookstore.model.Role;
+import org.example.bookstore.model.RoleName;
 import org.example.bookstore.model.User;
+import org.example.bookstore.repository.role.RoleRepository;
 import org.example.bookstore.repository.user.UserRepository;
 import org.example.bookstore.service.user.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -15,6 +20,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     @Override
     public UserResponseDto register(UserRegistrationRequestDto requestDto)
@@ -24,7 +31,10 @@ public class UserServiceImpl implements UserService {
                     + requestDto.getEmail() + " is already exist");
         }
         User user = userMapper.toModel(requestDto);
-        User savedUser = userRepository.save(user);
-        return userMapper.toDto(savedUser);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Role role = roleRepository.findRoleByName(RoleName.USER)
+                .orElseThrow(() -> new RuntimeException("Role not found"));
+        user.setRoles(Set.of(role));
+        return userMapper.toDto(userRepository.save(user));
     }
 }
