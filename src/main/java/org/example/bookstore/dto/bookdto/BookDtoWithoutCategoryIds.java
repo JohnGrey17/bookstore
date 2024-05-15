@@ -1,14 +1,11 @@
 package org.example.bookstore.dto.bookdto;
 
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
-
 import lombok.Data;
-import org.example.bookstore.model.Category;
+
+import java.math.BigDecimal;
 
 @Data
-public class BookResponseDto {
+public class BookDtoWithoutCategoryIds {
     private long id;
     private String title;
     private String author;
@@ -16,5 +13,4 @@ public class BookResponseDto {
     private BigDecimal price;
     private String description;
     private String coverImage;
-    private Set<Category> categories = new HashSet<>();
 }
