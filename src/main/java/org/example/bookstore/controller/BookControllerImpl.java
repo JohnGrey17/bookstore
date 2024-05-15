@@ -32,14 +32,14 @@ public class BookControllerImpl {
     private final BookService bookService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @Operation(summary = "Get all books", description = "Get all existing books from DB")
     public List<BookResponseDto> getAllBooks(Pageable pageable) {
         return bookService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @Operation(summary = "Get book by id", description = "Get existing book by id")
     public BookResponseDto getBookById(@PathVariable Long id) {
         return bookService.getBookById(id);
@@ -47,7 +47,7 @@ public class BookControllerImpl {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Create book", description = "Create book with parameters in DB")
     public BookResponseDto createBook(@RequestBody @Valid BookRequestDto requestDto) {
         return bookService.create(requestDto);
@@ -55,7 +55,7 @@ public class BookControllerImpl {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Update book by id", description = "Update existing book "
             + "by id with valid parameters")
     public BookResponseDto updateBookById(@PathVariable Long id,
@@ -64,7 +64,7 @@ public class BookControllerImpl {
     }
 
     @GetMapping("/search")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @Operation(summary = "Search books", description = "Search for books based"
             + " on specified parameters.")
     public List<BookResponseDto> search(BookSearchParameters searchParameters, Pageable pageable) {
@@ -73,7 +73,7 @@ public class BookControllerImpl {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Delete book", description = "Mark book as deleted from DB "
             + "and user won`t see information about it")
     public void delete(@PathVariable Long id) {
