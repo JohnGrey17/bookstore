@@ -13,3 +13,11 @@ databaseChangeLog:
       file: db/changelog/changes/06-add-roles.yaml
   - include:
       file: db/changelog/changes/07-add-roles-for-users.yaml
+  - include:
+      file: db/changelog/changes/08-create-category-table.yaml
+  - include:
+      file: db/changelog/changes/09-add-category-id-to-books-table.yaml
+  - include:
+      file: db/changelog/changes/10-add-book_id-categories-table.yaml
+  - include:
+      file: db/changelog/changes/11-add-foreing-keys.yaml
