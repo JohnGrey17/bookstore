@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-book_id-to-categories-table
+      author: Serj
+      changes:
+        - addColumn:
+            tableName: categories
+            columns:
+              - column:
+                  name: book_id
+                  type: bigint

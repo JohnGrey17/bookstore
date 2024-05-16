@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-foreign-keys
+      author: Serj
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: books
+            baseColumnNames: category_id
+            constraintName: fk_books_category_id
+            referencedTableName: categories
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: categories
+            baseColumnNames: book_id
+            constraintName: fk_categories_book_id
+            referencedTableName: books
+            referencedColumnNames: id
+            onDelete: CASCADE
