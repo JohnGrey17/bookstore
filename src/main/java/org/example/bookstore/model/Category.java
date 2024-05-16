@@ -26,7 +26,4 @@ public class Category {
     @Column(nullable = false)
     private String name;
     private String description;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
-    private Book book;
 }
