@@ -6,12 +6,11 @@ import org.example.bookstore.dto.userdto.UserRegistrationRequestDto;
 import org.example.bookstore.dto.userdto.UserResponseDto;
 import org.example.bookstore.exception.RegistrationException;
 import org.example.bookstore.mapper.UserMapper;
+import org.example.bookstore.model.User;
 import org.example.bookstore.model.roles.Role;
 import org.example.bookstore.model.roles.RoleName;
-import org.example.bookstore.model.User;
 import org.example.bookstore.repository.role.RoleRepository;
 import org.example.bookstore.repository.user.UserRepository;
-import org.example.bookstore.service.user.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

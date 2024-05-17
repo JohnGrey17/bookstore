@@ -4,9 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Set;
-
 import lombok.Data;
 import org.example.bookstore.model.Category;
 import org.hibernate.validator.constraints.ISBN;
@@ -26,5 +24,5 @@ public class BookRequestDto {
     private BigDecimal price;
     private String description;
     private String coverImage;
-    private Set<Category> categories = new HashSet<>();
+    private Set<Category> categories;
 }

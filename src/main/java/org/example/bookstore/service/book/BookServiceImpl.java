@@ -10,7 +10,6 @@ import org.example.bookstore.mapper.BookMapper;
 import org.example.bookstore.model.Book;
 import org.example.bookstore.repository.book.BookRepository;
 import org.example.bookstore.repository.book.BookSpecificationBuilder;
-import org.example.bookstore.service.book.BookService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -80,5 +79,14 @@ public class BookServiceImpl implements BookService {
                         .orElseThrow(() -> new EntityNotFoundException(
                         "Book not found with id: " + id));
         bookRepository.deleteById(id);
+    }
+
+    @Override
+    public List<BookResponseDto> getBookDtoByCategoryId(Long id, Pageable pageable) {
+        return bookRepository
+                .findByCategoriesId(id)
+                .stream()
+                .map(bookMapper::toDto)
+                .toList();
     }
 }

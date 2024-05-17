@@ -1,9 +1,7 @@
 package org.example.bookstore.dto.bookdto;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Set;
-
 import lombok.Data;
 import org.example.bookstore.model.Category;
 
@@ -16,5 +14,5 @@ public class BookResponseDto {
     private BigDecimal price;
     private String description;
     private String coverImage;
-    private Set<Category> categories = new HashSet<>();
+    private Set<Category> categories;
 }
