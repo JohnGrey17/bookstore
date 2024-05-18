@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.Set;
 import lombok.Data;
-import org.example.bookstore.model.Category;
 import org.hibernate.validator.constraints.ISBN;
 
 @Data
@@ -24,5 +23,5 @@ public class BookRequestDto {
     private BigDecimal price;
     private String description;
     private String coverImage;
-    private Set<Category> categories;
+    private Set<Long> categoryIds;
 }

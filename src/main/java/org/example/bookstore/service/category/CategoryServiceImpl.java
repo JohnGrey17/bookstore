@@ -2,8 +2,8 @@ package org.example.bookstore.service.category;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.example.bookstore.dto.categorydto.CategoryDto;
 import org.example.bookstore.dto.categorydto.CategoryRequestDto;
+import org.example.bookstore.dto.categorydto.CategoryResponseDto;
 import org.example.bookstore.exception.CategoryException;
 import org.example.bookstore.exception.EntityNotFoundException;
 import org.example.bookstore.mapper.CategoryMapper;
@@ -19,16 +19,16 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryMapper categoryMapper;
 
     @Override
-    public List<CategoryDto> findAll(Pageable pageable) {
+    public List<CategoryResponseDto> findAll(Pageable pageable) {
         return categoryRepository
-                .findAll()
+                .findAll(pageable)
                 .stream()
                 .map(categoryMapper::toDto)
                 .toList();
     }
 
     @Override
-    public CategoryDto getById(Long id) {
+    public CategoryResponseDto getById(Long id) {
         return categoryRepository.findById(id).stream()
                 .map(categoryMapper::toDto)
                 .findFirst()
@@ -37,7 +37,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto save(CategoryRequestDto requestDto) {
+    public CategoryResponseDto save(CategoryRequestDto requestDto) {
         if (categoryRepository.findByName(requestDto.getName()).isPresent()) {
             throw new CategoryException("That category already exist");
         }
@@ -46,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto update(Long id, CategoryRequestDto requestDto) {
+    public CategoryResponseDto update(Long id, CategoryRequestDto requestDto) {
         Category existingCategory = categoryRepository.findById(id).orElseThrow(
                 () -> new CategoryException(
                         "can`t find category by id: " + id));
