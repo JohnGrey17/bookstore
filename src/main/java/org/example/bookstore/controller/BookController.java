@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/books")
 @Tag(name = "Book Controller", description = "This controller handles requests "
         + "and responses related to books in the database")
-public class BookControllerImpl {
+public class BookController {
 
     private final BookService bookService;
 
