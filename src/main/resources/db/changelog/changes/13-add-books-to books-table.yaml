@@ -1,0 +1,118 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-books
+      author: Serj
+      changes:
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: Mein Kampf
+              - column:
+                  name: author
+                  value: Adolf Hitler
+              - column:
+                  name: isbn
+                  value: 978-3-12345-678-9
+              - column:
+                  name: price
+                  value: 20.00
+              - column:
+                  name: description
+                  value: "A political manifesto."
+              - column:
+                  name: cover_image
+                  value: "mein_kampf.jpg"
+              - column:
+                  name: is_deleted
+                  valueBoolean: false
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: Lord of the Rings
+              - column:
+                  name: author
+                  value: J.R.R. Tolkien
+              - column:
+                  name: isbn
+                  value: 978-0-395-19395-8
+              - column:
+                  name: price
+                  value: 25.00
+              - column:
+                  name: description
+                  value: "An epic fantasy novel."
+              - column:
+                  name: cover_image
+                  value: "lord_of_the_rings.jpg"
+              - column:
+                  name: is_deleted
+                  valueBoolean: false
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: title
+                  value: Mist
+              - column:
+                  name: author
+                  value: Stephen King
+              - column:
+                  name: isbn
+                  value: 978-1-56792-360-2
+              - column:
+                  name: price
+                  value: 15.00
+              - column:
+                  name: description
+                  value: "A horror novel."
+              - column:
+                  name: cover_image
+                  value: "mist.jpg"
+              - column:
+                  name: is_deleted
+                  valueBoolean: false
+
+  - changeSet:
+      id: add-book-categories
+      author: Serj
+      changes:
+        - insert:
+            tableName: book_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueNumeric: (SELECT id FROM books WHERE title = 'Mein Kampf')
+              - column:
+                  name: category_id
+                  valueNumeric: (SELECT id FROM categories WHERE name = 'Horror')
+        - insert:
+            tableName: book_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueNumeric: (SELECT id FROM books WHERE title = 'Lord of the Rings')
+              - column:
+                  name: category_id
+                  valueNumeric: (SELECT id FROM categories WHERE name = 'Fiction')
+        - insert:
+            tableName: book_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueNumeric: (SELECT id FROM books WHERE title = 'Lord of the Rings')
+              - column:
+                  name: category_id
+                  valueNumeric: (SELECT id FROM categories WHERE name = 'Adventures')
+        - insert:
+            tableName: book_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueNumeric: (SELECT id FROM books WHERE title = 'Mist')
+              - column:
+                  name: category_id
+                  valueNumeric: (SELECT id FROM categories WHERE name = 'Horror')
