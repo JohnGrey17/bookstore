@@ -1,18 +1,24 @@
 package org.example.bookstore.service.user;
 
+import java.util.Optional;
 import java.util.Set;
+
 import lombok.RequiredArgsConstructor;
 import org.example.bookstore.dto.userdto.UserRegistrationRequestDto;
 import org.example.bookstore.dto.userdto.UserResponseDto;
 import org.example.bookstore.exception.RegistrationException;
 import org.example.bookstore.mapper.UserMapper;
+import org.example.bookstore.model.ShoppingCart;
 import org.example.bookstore.model.User;
 import org.example.bookstore.model.roles.Role;
 import org.example.bookstore.model.roles.RoleName;
 import org.example.bookstore.repository.role.RoleRepository;
+import org.example.bookstore.repository.shoppingcart.ShoppingCartRepository;
 import org.example.bookstore.repository.user.UserRepository;
+import org.example.bookstore.service.shoppingcart.ShoppingCartService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -21,8 +27,11 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
+    private final ShoppingCartService shoppingCartService;
 
     @Override
+    @Transactional
     public UserResponseDto register(UserRegistrationRequestDto requestDto)
             throws RegistrationException {
         if (userRepository.existsByEmail(requestDto.getEmail())) {
@@ -34,6 +43,8 @@ public class UserServiceImpl implements UserService {
         Role role = roleRepository.findRoleByName(RoleName.USER)
                 .orElseThrow(() -> new RuntimeException("Role not found"));
         user.setRoles(Set.of(role));
-        return userMapper.toDto(userRepository.save(user));
+        userRepository.save(user);
+        shoppingCartService.createNewShoppingCart(user);
+        return userMapper.toDto(user);
     }
 }
