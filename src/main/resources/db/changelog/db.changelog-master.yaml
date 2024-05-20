@@ -20,4 +20,4 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/10-add-isdeleted-column-to-categories.yaml
   - include:
-      file: db/changelog/changes/11-add-categories-to-categories-table.yaml
+      file: db/changelog/changes/12-create-shoppingcart-cartitem-table.yaml
