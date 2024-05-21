@@ -35,6 +35,4 @@ public interface BookMapper {
             responseDto.setCategoryIds(Collections.emptySet());
         }
     }
-
 }
-

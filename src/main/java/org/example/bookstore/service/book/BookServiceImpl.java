@@ -1,6 +1,7 @@
 package org.example.bookstore.service.book;
 
 import jakarta.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,12 +40,17 @@ public class BookServiceImpl implements BookService {
 
         Book book = bookMapper.toModel(requestDto);
 
-        Set<Category> categories = requestDto.getCategoryIds().stream()
-                .map(categoryId -> categoryRepository.findById(categoryId)
-                        .orElseThrow(() -> new CategoryException(
-                                "Category not found with id: " + categoryId)))
-                .collect(Collectors.toSet());
-        book.setCategories(categories);
+        Set<Long> categoryIds = new HashSet<>(requestDto.getCategoryIds());
+        List<Category> categories = categoryRepository.findCategoriesByIds(categoryIds);
+
+        if (categories.size() != categoryIds.size()) {
+            Set<Long> foundCategoryIds = categories.stream().map(
+                    Category::getId).collect(Collectors.toSet());
+            categoryIds.removeAll(foundCategoryIds);
+            throw new CategoryException("Categories not found with ids: " + categoryIds);
+        }
+
+        book.setCategories(new HashSet<>(categories));
         Book savedBook = bookRepository.save(book);
         return bookMapper.toDto(savedBook);
     }

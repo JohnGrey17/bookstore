@@ -15,6 +15,8 @@ import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.lang3.builder.EqualsExclude;
+import org.apache.commons.lang3.builder.HashCodeExclude;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -40,12 +42,14 @@ public class Book {
     private String description;
     @Column (name = "cover_image")
     private String coverImage;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "book_categories",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
+    @EqualsExclude
+    @HashCodeExclude
     private Set<Category> categories;
     @Column(nullable = false)
     private boolean isDeleted = false;
