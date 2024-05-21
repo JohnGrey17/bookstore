@@ -19,7 +19,6 @@ public interface BookMapper {
 
     BookResponseDto toDto(Book book);
 
-    @Mapping(target = "categories", ignore = true)
     Book toModel(BookRequestDto bookRequestDto);
 
     BookDtoWithoutCategoryIds toDtoWithoutCategoryIds(Book book);
