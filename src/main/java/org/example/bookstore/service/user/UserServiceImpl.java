@@ -1,14 +1,11 @@
 package org.example.bookstore.service.user;
 
-import java.util.Optional;
 import java.util.Set;
-
 import lombok.RequiredArgsConstructor;
 import org.example.bookstore.dto.userdto.UserRegistrationRequestDto;
 import org.example.bookstore.dto.userdto.UserResponseDto;
 import org.example.bookstore.exception.RegistrationException;
 import org.example.bookstore.mapper.UserMapper;
-import org.example.bookstore.model.ShoppingCart;
 import org.example.bookstore.model.User;
 import org.example.bookstore.model.roles.Role;
 import org.example.bookstore.model.roles.RoleName;

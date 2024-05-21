@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -54,14 +53,15 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(CategoryException.class)
-    protected ResponseEntity<Object> handleCategoryException(RegistrationException ex) {
+    protected ResponseEntity<Object> handleCategoryException(CategoryException ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         Map<String, Object> body = createErrorMessageBody(status, ex.getMessage());
         return new ResponseEntity<>(body, status);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    protected ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+    protected ResponseEntity<Object> handleDataIntegrityViolationException(
+            DataIntegrityViolationException ex) {
         HttpStatus status = HttpStatus.CONFLICT;
         Map<String, Object> body = createErrorMessageBody(status, ex.getMessage());
         return new ResponseEntity<>(body, status);

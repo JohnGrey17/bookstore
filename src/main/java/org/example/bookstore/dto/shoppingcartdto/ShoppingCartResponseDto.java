@@ -1,13 +1,12 @@
 package org.example.bookstore.dto.shoppingcartdto;
 
-import lombok.Data;
-import org.example.bookstore.model.CartItem;
-
 import java.util.Set;
+import lombok.Data;
+import org.example.bookstore.dto.cartitemdto.CartItemResponseDto;
 
 @Data
 public class ShoppingCartResponseDto {
     private Long id;
     private Long userId;
-    private Set<CartItem> cartItems;
+    private Set<CartItemResponseDto> cartItems;
 }
