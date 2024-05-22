@@ -1,4 +1,4 @@
-package org.example.bookstore.model.Order;
+package org.example.bookstore.model.status;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

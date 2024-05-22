@@ -1,4 +1,4 @@
-package org.example.bookstore.model.Order;
+package org.example.bookstore.model.order;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -19,6 +19,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.example.bookstore.model.User;
+import org.example.bookstore.model.status.Status;
+import org.example.bookstore.model.status.StatusConverter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.mapstruct.Mapping;
