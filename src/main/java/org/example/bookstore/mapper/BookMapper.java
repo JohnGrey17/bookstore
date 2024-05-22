@@ -11,6 +11,7 @@ import org.example.bookstore.model.Book;
 import org.example.bookstore.model.Category;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(config = MapperConfig.class)
@@ -18,6 +19,7 @@ public interface BookMapper {
 
     BookResponseDto toDto(Book book);
 
+    @Mapping(target = "categories", ignore = true)
     Book toModel(BookRequestDto bookRequestDto);
 
     BookDtoWithoutCategoryIds toDtoWithoutCategoryIds(Book book);
