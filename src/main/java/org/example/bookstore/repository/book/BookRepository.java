@@ -14,6 +14,6 @@ public interface BookRepository extends JpaRepository<Book,Long>, JpaSpecificati
 
     Optional<Book> findByIsbn(String isbn);
 
-    @Query("FROM Book b JOIN FETCH b.categories c WHERE c.id = :categoryId")
+    @Query("FROM Book b Join FETCH b.categories c WHERE c.id = :categoryId")
     List<Book> findAllByCategoryId(Long categoryId,Pageable pageable);
 }

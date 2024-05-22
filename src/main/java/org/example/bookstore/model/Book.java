@@ -41,7 +41,7 @@ public class Book {
     private String description;
     @Column (name = "cover_image")
     private String coverImage;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "book_categories",
             joinColumns = @JoinColumn(name = "book_id"),
