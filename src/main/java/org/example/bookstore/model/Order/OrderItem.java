@@ -3,15 +3,21 @@ package org.example.bookstore.model.Order;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.example.bookstore.model.Book;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.math.BigDecimal;
 
@@ -19,18 +25,29 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @ToString
+@SQLDelete(sql = "UPDATE order_items SET is_deleted = true WHERE id = ?")
+@SQLRestriction(value = "is_deleted=false")
+@Table(name = "order_items")
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
-    @Column(nullable = false)
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id", nullable = false)
     private Book book;
+
     @Column(nullable = false)
-    private Integer quantity;
+    private int quantity;
+
     @Column(nullable = false)
     private BigDecimal price;
+
+    @Column(nullable = false)
+    private boolean isDeleted = false;
 }
+
