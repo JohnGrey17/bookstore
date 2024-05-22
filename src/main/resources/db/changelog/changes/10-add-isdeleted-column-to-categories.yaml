@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-isdeleted-column-to-categories
+      author: Serj
+      changes:
+        - addColumn:
+            tableName: categories
+            columns:
+              - column:
+                  name: is_deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false

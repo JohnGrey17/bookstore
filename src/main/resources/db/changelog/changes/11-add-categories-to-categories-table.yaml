@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-categories
+      author: Serj
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: name
+                  value: Fiction
+              - column:
+                  name: description
+                  value: description of fiction
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: name
+                  value: Horror
+              - column:
+                  name: description
+                  value: Description of Horror
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: name
+                  value: Comedy
+              - column:
+                  name: description
+                  value: Description of comedy
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: name
+                  value: Adventures
+              - column:
+                  name: description
+                  value: Description of adventures

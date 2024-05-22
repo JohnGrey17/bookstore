@@ -1,4 +1,4 @@
-package org.example.bookstore.service.impl.user;
+package org.example.bookstore.service.user;
 
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
@@ -6,12 +6,11 @@ import org.example.bookstore.dto.userdto.UserRegistrationRequestDto;
 import org.example.bookstore.dto.userdto.UserResponseDto;
 import org.example.bookstore.exception.RegistrationException;
 import org.example.bookstore.mapper.UserMapper;
-import org.example.bookstore.model.Role;
-import org.example.bookstore.model.RoleName;
 import org.example.bookstore.model.User;
+import org.example.bookstore.model.roles.Role;
+import org.example.bookstore.model.roles.RoleName;
 import org.example.bookstore.repository.role.RoleRepository;
 import org.example.bookstore.repository.user.UserRepository;
-import org.example.bookstore.service.user.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
