@@ -10,9 +10,9 @@ import org.example.bookstore.model.User;
 import org.example.bookstore.model.roles.Role;
 import org.example.bookstore.model.roles.RoleName;
 import org.example.bookstore.repository.role.RoleRepository;
-import org.example.bookstore.repository.shoppingcart.ShoppingCartRepository;
 import org.example.bookstore.repository.user.UserRepository;
 import org.example.bookstore.service.shoppingcart.ShoppingCartService;
+import org.example.bookstore.service.user.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +24,6 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-    private final ShoppingCartRepository shoppingCartRepository;
     private final ShoppingCartService shoppingCartService;
 
     @Override
