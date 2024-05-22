@@ -60,10 +60,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteById(Long id) {
+        checkCategoryExists(id);
+        categoryRepository.deleteById(id);
+    }
+
+    private void checkCategoryExists(Long id) {
         boolean exists = categoryRepository.existsById(id);
         if (!exists) {
             throw new EntityNotFoundException("Category not found with id: " + id);
         }
-        categoryRepository.deleteById(id);
     }
 }

@@ -44,10 +44,8 @@ public class BookServiceImpl implements BookService {
         List<Category> categories = categoryRepository.findCategoriesByIds(categoryIds);
 
         if (categories.size() != categoryIds.size()) {
-            Set<Long> foundCategoryIds = categories.stream().map(
-                    Category::getId).collect(Collectors.toSet());
-            categoryIds.removeAll(foundCategoryIds);
-            throw new CategoryException("Categories not found with ids: " + categoryIds);
+            Set<Long> missingCategoryIds = findMissingCategoryIds(categoryIds, categories);
+            throw new CategoryException("Categories not found with ids: " + missingCategoryIds);
         }
 
         book.setCategories(new HashSet<>(categories));
@@ -72,20 +70,34 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public BookResponseDto updateBookById(Long id, BookRequestDto updatedBookDto) {
         Book existingBook = bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Book not found with id: " + id));
+
         String isbn = updatedBookDto.getIsbn();
-        if (isbn != null && bookRepository.findByIsbn(isbn).isPresent()) {
+        if (isbn != null && !isbn.equals(existingBook.getIsbn()) && bookRepository
+                .findByIsbn(isbn).isPresent()) {
             throw new EntityNotFoundException("Book with ISBN " + isbn + " already exists.");
         }
+
+        Set<Long> categoryIds = new HashSet<>(updatedBookDto.getCategoryIds());
+        List<Category> categories = categoryRepository.findCategoriesByIds(categoryIds);
+
+        if (categories.size() != categoryIds.size()) {
+            Set<Long> missingCategoryIds = findMissingCategoryIds(categoryIds, categories);
+            throw new CategoryException("Categories not found with ids: " + missingCategoryIds);
+        }
+
         existingBook.setTitle(updatedBookDto.getTitle());
         existingBook.setAuthor(updatedBookDto.getAuthor());
         existingBook.setDescription(updatedBookDto.getDescription());
         existingBook.setIsbn(updatedBookDto.getIsbn());
         existingBook.setPrice(updatedBookDto.getPrice());
         existingBook.setCoverImage(updatedBookDto.getCoverImage());
+        existingBook.setCategories(new HashSet<>(categories));
+
         return bookMapper.toDto(bookRepository.save(existingBook));
     }
 
@@ -100,7 +112,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteById(Long id) {
         bookRepository.findById(id)
-                        .orElseThrow(() -> new EntityNotFoundException(
+                .orElseThrow(() -> new EntityNotFoundException(
                         "Book not found with id: " + id));
         bookRepository.deleteById(id);
     }
@@ -110,5 +122,13 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAllByCategoryId(categoryId, pageable).stream()
                 .map(bookMapper::toDtoWithoutCategoryIds)
                 .collect(Collectors.toList());
+    }
+
+    private Set<Long> findMissingCategoryIds(Set<Long> categoryIds, List<Category> categories) {
+        Set<Long> foundCategoryIds = categories.stream()
+                .map(Category::getId)
+                .collect(Collectors.toSet());
+        categoryIds.removeAll(foundCategoryIds);
+        return categoryIds;
     }
 }
