@@ -27,3 +27,7 @@ databaseChangeLog:
       file: db/changelog/changes/13-add-books-to books-table.yaml
   - include:
       file: db/changelog/changes/14-add-isDeleted-column-to-cartitem-table.yaml
+  - include:
+      file: db/changelog/changes/15-create-order-table.yaml
+  - include:
+      file: db/changelog/changes/16-create-order-items-table.yaml
