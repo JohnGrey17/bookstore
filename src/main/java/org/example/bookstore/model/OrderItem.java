@@ -1,4 +1,4 @@
-package org.example.bookstore.model.order;
+package org.example.bookstore.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.example.bookstore.model.Book;
+import org.example.bookstore.model.order.Order;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
