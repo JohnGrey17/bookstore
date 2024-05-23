@@ -55,14 +55,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookResponseDto> findAll(Pageable pageable) {
-        return bookRepository.findAll().stream()
+        return bookRepository.findAllWithCategories().stream()
                 .map(bookMapper::toDto)
                 .toList();
     }
 
     @Override
     public BookResponseDto getBookById(Long id) {
-        return bookRepository.findById(id).stream()
+        return bookRepository.findByIdWithCategories(id).stream()
                 .map(bookMapper::toDto)
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException(

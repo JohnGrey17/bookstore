@@ -13,8 +13,8 @@ import org.mapstruct.Named;
 @Mapper(config = MapperConfig.class)
 public interface CartItemMapper {
 
-    @Mapping(target = "bookId", source = "book", qualifiedByName = "bookIdByBook")
-    @Mapping(target = "bookTitle", source = "book", qualifiedByName = "getTitleByBook")
+    @Mapping(target = "bookId", source = "book.id")
+    @Mapping(target = "bookTitle", source = "book.title")
     CartItemResponseDto toDto(CartItem cartItem);
 
     @Mapping(target = "book", source = "bookId", qualifiedByName = "bookByBookId")
