@@ -23,6 +23,7 @@ import org.hibernate.annotations.SQLRestriction;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -55,7 +56,7 @@ public class Order {
     private String shippingAddress;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-    private Set<OrderItem> orderItems;
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     @Column(nullable = false)
     private boolean isDeleted = false;
