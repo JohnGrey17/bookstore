@@ -10,7 +10,7 @@ import org.example.bookstore.dto.shoppingcartdto.ShoppingCartResponseDto;
 import org.example.bookstore.dto.shoppingcartdto.ShoppingCartUpdatedDto;
 import org.example.bookstore.model.User;
 import org.example.bookstore.service.shoppingcart.ShoppingCartService;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -45,9 +46,8 @@ public class ShoppingCartController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @Operation(summary = "Get User's Shopping Cart", description = "Retrieve the user's "
             + "shopping cart by user ID.")
-    public ShoppingCartResponseDto getUserShoppingCartById(@PathVariable Long userId,
-                                                           Pageable pageable) {
-        return shoppingCartService.getUserShoppingCartById(userId, pageable);
+    public ShoppingCartResponseDto getUserShoppingCartById(@PathVariable Long userId) {
+        return shoppingCartService.getUserShoppingCartById(userId);
     }
 
     @PutMapping("/cart-items/{cartItemId}")
@@ -64,6 +64,7 @@ public class ShoppingCartController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @Operation(summary = "Delete Cart Item", description = "Delete a cart item "
             + "with the given ID.")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteCartItemById(@PathVariable Long cartItemId) {
         shoppingCartService.deleteCartById(cartItemId);
     }

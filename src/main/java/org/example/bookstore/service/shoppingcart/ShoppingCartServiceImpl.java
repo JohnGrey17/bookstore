@@ -15,7 +15,6 @@ import org.example.bookstore.repository.book.BookRepository;
 import org.example.bookstore.repository.cartitem.CartItemRepository;
 import org.example.bookstore.repository.shoppingcart.ShoppingCartRepository;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,12 +38,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     @Transactional
     public ShoppingCartResponseDto addBookToCartItem(Long userId, CartItemRequestDto requestDto) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUserId(userId);
-        if (shoppingCart == null) {
-            throw new DataIntegrityViolationException("Shopping cart "
-                    + "not found for user id: " + userId);
-        }
-
+        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUserId(userId)
+                .orElseThrow(() -> new EntityNotFoundException("can`t find shopping "
+                        + "can`t by id: " + userId));
         CartItem cartItem = new CartItem();
         cartItem.setQuantity(requestDto.getQuantity());
         cartItem.setBook(bookRepository.findById(requestDto.getBookId())
@@ -58,8 +54,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCartResponseDto getUserShoppingCartById(Long userId, Pageable pageable) {
-        ShoppingCart shoppingCartByUserId = shoppingCartRepository.findShoppingCartByUserId(userId);
+    @Transactional
+    public ShoppingCartResponseDto getUserShoppingCartById(Long userId) {
+        ShoppingCart shoppingCartByUserId = shoppingCartRepository.findShoppingCartByUserId(userId)
+                .orElseThrow(() -> new EntityNotFoundException("can`t find shoppingCart by id: "
+                        + userId));
         return shoppingCartMapper.toDto(shoppingCartByUserId);
     }
 
@@ -72,9 +71,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         cartItem.setQuantity(updateDto.getQuantity());
         cartItemRepository.save(cartItem);
-        ShoppingCartUpdatedDto updatedCartItem = shoppingCartMapper.toUpdatedCartItem(updateDto);
-        updatedCartItem.setBookTitle(cartItem.getBook().getTitle());
-        return updatedCartItem;
+
+        return shoppingCartMapper.toUpdatedCartItem(updateDto);
     }
 
     @Override
