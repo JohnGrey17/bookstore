@@ -1,13 +1,11 @@
-package org.example.bookstore.dto.orderDto;
+package org.example.bookstore.dto.orderdto;
 
-
-import lombok.Data;
-import org.example.bookstore.dto.orderitemdto.OrderItemResponseDto;
-import org.example.bookstore.model.User;
-import org.example.bookstore.model.status.Status;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
+import lombok.Data;
+import org.example.bookstore.dto.orderitemdto.OrderItemResponseDto;
+import org.example.bookstore.model.status.Status;
 
 @Data
 public class OrderResponseDto {

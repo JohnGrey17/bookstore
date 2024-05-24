@@ -10,4 +10,5 @@ import org.mapstruct.Mapping;
 public interface OrderItemsMapper {
     @Mapping(target = "bookId",source = "book.id")
     OrderItemResponseDto toDto(OrderItem orderItem);
+
 }
