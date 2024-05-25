@@ -2,7 +2,6 @@ package org.example.bookstore.service.order;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -124,16 +123,27 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public OrderUpdatedDto changeStatusOfOrderById(Long orderId, OrderStatusUpdateRequest request) {
-        Order order = orderRepository.findById(orderId).orElseThrow(()
-                -> new EntityNotFoundException("Order with id: " + orderId + " does not exist"));
+        Order order = orderRepository.findById(orderId).orElseThrow(() ->
+                new EntityNotFoundException("Order with id: " + orderId + " does not exist"));
 
-        Status newStatus = Arrays.stream(Status.values())
-                .filter(sts -> sts.name().equalsIgnoreCase(request.getStatus().trim()))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid status: "
-                        + request.getStatus()));
+        String statusString = request.getStatus().trim().toUpperCase();
+        System.out.println("Received status from request: " + statusString);
 
-        order.setStatus(newStatus);
+        Status[] values = Status.values();
+        boolean statusFound = false;
+
+        for (Status sts : values) {
+            if (statusString.equalsIgnoreCase(sts.toString())) {
+                order.setStatus(sts);
+                statusFound = true;
+                break;
+            }
+        }
+
+        if (!statusFound) {
+            throw new IllegalArgumentException("Invalid status: " + statusString);
+        }
+
         Order savedOrder = orderRepository.save(order);
         return orderMapper.toUpdateDto(savedOrder);
     }
