@@ -22,6 +22,7 @@ import org.example.bookstore.model.ShoppingCart;
 import org.example.bookstore.model.User;
 import org.example.bookstore.model.order.Order;
 import org.example.bookstore.model.status.Status;
+import org.example.bookstore.repository.cartitem.CartItemRepository;
 import org.example.bookstore.repository.order.OrderRepository;
 import org.example.bookstore.repository.orderitem.OrderItemRepository;
 import org.example.bookstore.repository.shoppingcart.ShoppingCartRepository;
@@ -40,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
     private final OrderItemRepository orderItemRepository;
     private final OrderItemsMapper orderItemsMapper;
+    private final CartItemRepository cartItemRepository;
 
     @Override
     @Transactional
@@ -83,6 +85,7 @@ public class OrderServiceImpl implements OrderService {
 
         Order savedOrder = orderRepository.save(order);
         orderItemRepository.saveAll(orderItems);
+        cartItemRepository.deleteAllByShoppingCartId(shoppingCart.getId());
         return orderMapper.toDto(savedOrder);
     }
 
