@@ -9,9 +9,10 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.example.bookstore.dto.orderdto.OrderRequestDto;
 import org.example.bookstore.dto.orderdto.OrderResponseDto;
-import org.example.bookstore.dto.orderdto.OrderStatusUpdateRequest;
+import org.example.bookstore.dto.orderdto.OrderStatusUpdateRequestDto;
 import org.example.bookstore.dto.orderdto.OrderUpdatedDto;
 import org.example.bookstore.dto.orderitemdto.OrderItemResponseDto;
+import org.example.bookstore.exception.EmptyCartException;
 import org.example.bookstore.exception.EntityNotFoundException;
 import org.example.bookstore.mapper.OrderItemsMapper;
 import org.example.bookstore.mapper.OrderMapper;
@@ -27,7 +28,6 @@ import org.example.bookstore.repository.orderitem.OrderItemRepository;
 import org.example.bookstore.repository.shoppingcart.ShoppingCartRepository;
 import org.example.bookstore.repository.user.UserRepository;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,10 +45,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public OrderResponseDto createNewOrder(OrderRequestDto requestDto,
-                                           Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        userRepository.findById(user.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User with id: " + user.getId()
+                                           Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User with id: " + userId
                         + "does not exist"));
         ShoppingCart shoppingCart = shoppingCartRepository
                 .findShoppingCartByUserId(user.getId()).orElseThrow(()
@@ -56,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
         Set<CartItem> cartItems = shoppingCart.getCartItems();
 
         if (cartItems == null || cartItems.isEmpty()) {
-            throw new EntityNotFoundException("Your shopping cart is empty ");
+            throw new EmptyCartException("Your shopping cart is empty ");
         }
 
         Order order = new Order();
@@ -90,8 +89,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public List<OrderResponseDto> getAllUserOrders(Pageable pageable) {
-        return orderRepository.findAll().stream()
+    public List<OrderResponseDto> getAllUserOrders(Long userId,Pageable pageable) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException(
+                "can`t find user"));
+        List<Order> ordersByUserId = orderRepository.findAllByUserId(user.getId());
+        return ordersByUserId.stream()
                 .map(orderMapper::toDto)
                 .toList();
     }
@@ -122,7 +124,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public OrderUpdatedDto changeStatusOfOrderById(Long orderId, OrderStatusUpdateRequest request) {
+    public OrderUpdatedDto changeStatusOfOrderById(Long orderId,
+                                                   OrderStatusUpdateRequestDto request) {
         Order order = orderRepository.findById(orderId).orElseThrow(() ->
                 new EntityNotFoundException("Order with id: " + orderId + " does not exist"));
 
@@ -132,9 +135,9 @@ public class OrderServiceImpl implements OrderService {
         Status[] values = Status.values();
         boolean statusFound = false;
 
-        for (Status sts : values) {
-            if (statusString.equalsIgnoreCase(sts.toString())) {
-                order.setStatus(sts);
+        for (Status enumValue : values) {
+            if (statusString.equalsIgnoreCase(enumValue.name())) {
+                order.setStatus(enumValue);
                 statusFound = true;
                 break;
             }

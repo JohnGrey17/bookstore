@@ -8,8 +8,7 @@ import org.example.bookstore.model.order.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(config = MapperConfig.class, uses = {UserMapper.class,
-        BookMapper.class, OrderItemsMapper.class})
+@Mapper(config = MapperConfig.class, uses = OrderItemsMapper.class)
 public interface OrderMapper {
 
     @Mapping(target = "userId", source = "user.id")

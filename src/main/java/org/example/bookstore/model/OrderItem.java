@@ -20,7 +20,6 @@ import org.hibernate.annotations.SQLRestriction;
 @Entity
 @Getter
 @Setter
-@ToString
 @SQLDelete(sql = "UPDATE order_items SET is_deleted = true WHERE id = ?")
 @SQLRestriction(value = "is_deleted=false")
 @Table(name = "order_items")
@@ -31,10 +30,12 @@ public class OrderItem {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
+    @ToString.Exclude
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false)
+    @ToString.Exclude
     private Book book;
 
     @Column(nullable = false)

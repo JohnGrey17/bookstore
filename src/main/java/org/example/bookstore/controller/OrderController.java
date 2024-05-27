@@ -7,13 +7,14 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.example.bookstore.dto.orderdto.OrderRequestDto;
 import org.example.bookstore.dto.orderdto.OrderResponseDto;
-import org.example.bookstore.dto.orderdto.OrderStatusUpdateRequest;
+import org.example.bookstore.dto.orderdto.OrderStatusUpdateRequestDto;
 import org.example.bookstore.dto.orderdto.OrderUpdatedDto;
 import org.example.bookstore.dto.orderitemdto.OrderItemResponseDto;
+import org.example.bookstore.model.User;
 import org.example.bookstore.service.order.OrderService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,17 +34,18 @@ public class OrderController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @Operation(summary = "Create a new order", description = "Create a new order for "
             + "the authenticated user.")
-    public OrderResponseDto createNewOrder(Authentication authentication,
+    public OrderResponseDto createNewOrder(@AuthenticationPrincipal User user,
                                            @RequestBody @Valid OrderRequestDto requestDto) {
-        return orderService.createNewOrder(requestDto, authentication);
+        return orderService.createNewOrder(requestDto,user.getId());
     }
 
     @GetMapping
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @Operation(summary = "Get user's order history", description = "Retrieve the order history"
             + " of the authenticated user.")
-    public List<OrderResponseDto> getUsersOrdersHistory(Pageable pageable) {
-        return orderService.getAllUserOrders(pageable);
+    public List<OrderResponseDto> getUsersOrdersHistory(@AuthenticationPrincipal User user,
+                                                        Pageable pageable) {
+        return orderService.getAllUserOrders(user.getId(),pageable);
     }
 
     @GetMapping("/{orderId}/items")
@@ -67,7 +69,8 @@ public class OrderController {
     @Operation(summary = "Change order status", description = "Change the status"
             + " of an order by its ID.")
     public OrderUpdatedDto changeStatusOfOrder(@PathVariable Long orderId,
-                                               @RequestBody OrderStatusUpdateRequest request) {
+                                               @RequestBody @Valid
+                                               OrderStatusUpdateRequestDto request) {
         return orderService.changeStatusOfOrderById(orderId,request);
     }
 }
