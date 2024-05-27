@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mysql:
+    restart: on-failure
+    image: mysql
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - ${SQL_DOCKER_PORT}:${SQL_LOCAL_PORT}
+    healthcheck:
+      test: [ "CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u ${MYSQL_USER_NAME} -p${MYSQL_ROOT_PASSWORD}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  book_store:
+    depends_on:
+     mysql:
+      condition: service_healthy
+    restart: on-failure
+    build: .
+    container_name: book_store
+    environment:
+      SPRING_APPLICATION_JSON: '{
+              "spring.datasource.username" : "${MYSQL_USER_NAME}",
+              "spring.datasource.password" : "${MYSQL_ROOT_PASSWORD}"              
+            }'
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+    ports:
+      - ${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}
+      - $DEBUG_PORT:$DEBUG_PORT
