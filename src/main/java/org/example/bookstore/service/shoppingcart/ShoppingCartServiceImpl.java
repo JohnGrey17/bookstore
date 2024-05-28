@@ -54,7 +54,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public ShoppingCartResponseDto getUserShoppingCartById(Long userId) {
         ShoppingCart shoppingCartByUserId = shoppingCartRepository.findShoppingCartByUserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException("can`t find shoppingCart by id: "
