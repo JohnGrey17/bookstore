@@ -47,10 +47,10 @@ public class OrderServiceImpl implements OrderService {
                                            Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User with id: " + userId
-                        + "does not exist"));
+                        + " does not exist"));
         ShoppingCart shoppingCart = shoppingCartRepository
-                .findShoppingCartByUserId(user.getId()).orElseThrow(()
-                        -> new EntityNotFoundException("Shopping cart does not exist"));
+                .findShoppingCartByUserId(user.getId()).orElseThrow(
+                        () -> new EntityNotFoundException("Shopping cart does not exist"));
         Set<CartItem> cartItems = shoppingCart.getCartItems();
 
         if (cartItems == null || cartItems.isEmpty()) {
@@ -62,17 +62,9 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(Status.PENDING);
         order.setShippingAddress(requestDto.getShippingAddress());
 
-        Set<OrderItem> orderItems = cartItems.stream().map(cartItem -> {
-            OrderItem orderItem = new OrderItem();
-            orderItem.setOrder(order);
-
-            orderItem.setBook(cartItem.getBook());
-            orderItem.setQuantity(cartItem.getQuantity());
-            orderItem.setPrice(cartItem.getBook().getPrice().multiply(
-                    BigDecimal.valueOf(cartItem.getQuantity())));
-
-            return orderItem;
-        }).collect(Collectors.toSet());
+        Set<OrderItem> orderItems = cartItems.stream()
+                .map(cartItem -> mapToOrderItem(cartItem, order))
+                .collect(Collectors.toSet());
         order.setOrderItems(orderItems);
         order.setTotal(calculateTotal(orderItems));
 
@@ -151,5 +143,15 @@ public class OrderServiceImpl implements OrderService {
                 .map(orderItem -> orderItem.getPrice().multiply(
                         BigDecimal.valueOf(orderItem.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private OrderItem mapToOrderItem(CartItem cartItem, Order order) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setOrder(order);
+        orderItem.setBook(cartItem.getBook());
+        orderItem.setQuantity(cartItem.getQuantity());
+        orderItem.setPrice(cartItem.getBook().getPrice()
+                .multiply(BigDecimal.valueOf(cartItem.getQuantity())));
+        return orderItem;
     }
 }
