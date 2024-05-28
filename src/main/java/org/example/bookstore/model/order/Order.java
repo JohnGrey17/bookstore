@@ -1,7 +1,6 @@
 package org.example.bookstore.model.order;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +20,7 @@ import lombok.ToString;
 import org.example.bookstore.model.OrderItem;
 import org.example.bookstore.model.User;
 import org.example.bookstore.model.status.Status;
-import org.example.bookstore.model.status.StatusConverter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -41,14 +40,13 @@ public class Order {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Convert(converter = StatusConverter.class)
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "varchar(255)")
     private Status status;
 
     @Column(nullable = false)
     private BigDecimal total;
 
-    @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime orderDate;
 
     @Column(nullable = false)

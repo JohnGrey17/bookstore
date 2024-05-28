@@ -1,7 +1,6 @@
 package org.example.bookstore.service.order;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -60,7 +59,6 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = new Order();
         order.setUser(user);
-        order.setOrderDate(LocalDateTime.now());
         order.setStatus(Status.PENDING);
         order.setShippingAddress(requestDto.getShippingAddress());
 
@@ -76,10 +74,7 @@ public class OrderServiceImpl implements OrderService {
             return orderItem;
         }).collect(Collectors.toSet());
         order.setOrderItems(orderItems);
-        order.setTotal(orderItems.stream()
-                .map(orderItem -> orderItem.getPrice().multiply(
-                        BigDecimal.valueOf(orderItem.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add));
+        order.setTotal(calculateTotal(orderItems));
 
         Order savedOrder = orderRepository.save(order);
         orderItemRepository.saveAll(orderItems);
@@ -91,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public List<OrderResponseDto> getAllUserOrders(Long userId,Pageable pageable) {
         User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException(
-                "can`t find user"));
+                "can`t find user " + userId));
         List<Order> ordersByUserId = orderRepository.findAllByUserId(user.getId());
         return ordersByUserId.stream()
                 .map(orderMapper::toDto)
@@ -123,7 +118,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public OrderUpdatedDto changeStatusOfOrderById(Long orderId,
                                                    OrderStatusUpdateRequestDto request) {
         Order order = orderRepository.findById(orderId).orElseThrow(() ->
@@ -149,5 +144,12 @@ public class OrderServiceImpl implements OrderService {
 
         Order savedOrder = orderRepository.save(order);
         return orderMapper.toUpdateDto(savedOrder);
+    }
+
+    private BigDecimal calculateTotal(Set<OrderItem> orderItems) {
+        return orderItems.stream()
+                .map(orderItem -> orderItem.getPrice().multiply(
+                        BigDecimal.valueOf(orderItem.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
