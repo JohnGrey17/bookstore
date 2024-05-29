@@ -2,14 +2,14 @@ package org.example.bookstore.model.status;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public enum Status {
+public enum OrderStatus {
     PENDING,
     COMPLETE,
     DELIVERED;
 
     @JsonCreator
-    public static Status fromString(String str) {
-        for (Status status : Status.values()) {
+    public static OrderStatus fromString(String str) {
+        for (OrderStatus status : OrderStatus.values()) {
             if (status.name().equalsIgnoreCase(str)) {
                 return status;
             }

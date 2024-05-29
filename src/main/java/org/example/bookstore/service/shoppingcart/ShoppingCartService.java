@@ -4,6 +4,7 @@ import org.example.bookstore.dto.cartitemdto.CartItemRequestDto;
 import org.example.bookstore.dto.cartitemdto.CartItemUpdateDto;
 import org.example.bookstore.dto.shoppingcartdto.ShoppingCartResponseDto;
 import org.example.bookstore.dto.shoppingcartdto.ShoppingCartUpdatedDto;
+import org.example.bookstore.model.ShoppingCart;
 import org.example.bookstore.model.User;
 
 public interface ShoppingCartService {
@@ -16,4 +17,6 @@ public interface ShoppingCartService {
     ShoppingCartUpdatedDto updateCartItemById(Long cartItemId, CartItemUpdateDto updateDto);
 
     void deleteCartById(Long cartItemId);
+
+    ShoppingCart getShoppingCartByUserId(Long userId);
 }

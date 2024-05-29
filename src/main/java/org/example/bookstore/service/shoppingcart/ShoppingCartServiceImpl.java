@@ -82,4 +82,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 + " does not exist"));
         cartItemRepository.deleteById(cartItemId);
     }
+
+    public ShoppingCart getShoppingCartByUserId(Long userId) {
+        return shoppingCartRepository.findShoppingCartByUserId(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Shopping cart does not exist"));
+    }
 }

@@ -2,6 +2,8 @@ package org.example.bookstore.model.order;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +21,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.example.bookstore.model.OrderItem;
 import org.example.bookstore.model.User;
-import org.example.bookstore.model.status.Status;
+import org.example.bookstore.model.status.OrderStatus;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -41,7 +43,8 @@ public class Order {
     private User user;
 
     @Column(nullable = false, columnDefinition = "varchar(255)")
-    private Status status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
     @Column(nullable = false)
     private BigDecimal total;

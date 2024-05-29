@@ -32,7 +32,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         body.put("status", HttpStatus.BAD_REQUEST);
         List<String> errors = ex.getBindingResult()
                 .getAllErrors().stream()
-                .map(this::getErrorMassage)
+                .map(this::getErrorMessage)
                 .toList();
         body.put("errors", errors);
         return new ResponseEntity<>(body, headers, status);
@@ -45,22 +45,12 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(body, status);
     }
 
-    @ExceptionHandler(EmptyCartException.class)
-    protected ResponseEntity<Object> handleEmptyCartException(EmptyCartException ex) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        Map<String, Object> body = createErrorMessageBody(status, ex.getMessage());
-        return new ResponseEntity<>(body, status);
-    }
-
-    @ExceptionHandler(RegistrationException.class)
-    protected ResponseEntity<Object> handleRegistrationException(RegistrationException ex) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        Map<String, Object> body = createErrorMessageBody(status, ex.getMessage());
-        return new ResponseEntity<>(body, status);
-    }
-
-    @ExceptionHandler(CategoryException.class)
-    protected ResponseEntity<Object> handleCategoryException(CategoryException ex) {
+    @ExceptionHandler({
+            EmptyCartException.class,
+            RegistrationException.class,
+            CategoryException.class
+    })
+    protected ResponseEntity<Object> handleBadRequestExceptions(RuntimeException ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         Map<String, Object> body = createErrorMessageBody(status, ex.getMessage());
         return new ResponseEntity<>(body, status);
@@ -74,7 +64,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(body, status);
     }
 
-    private String getErrorMassage(ObjectError e) {
+    private String getErrorMessage(ObjectError e) {
         if (e instanceof FieldError) {
             String field = ((FieldError) e).getField();
             String message = e.getDefaultMessage();
