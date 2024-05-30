@@ -1,9 +1,9 @@
 package org.example.bookstore.dto.orderdto;
 
-import jakarta.validation.constraints.NotNull;
-import org.example.bookstore.model.status.OrderStatus;
+import lombok.Data;
 
+@Data
 public class OrderUpdatedDto {
-    @NotNull
-    private OrderStatus status;
+
+    private String status;
 }
