@@ -2,7 +2,6 @@ package org.example.bookstore.service.order;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +12,7 @@ import org.example.bookstore.dto.orderdto.OrderUpdatedDto;
 import org.example.bookstore.dto.orderitemdto.OrderItemResponseDto;
 import org.example.bookstore.exception.EmptyCartException;
 import org.example.bookstore.exception.EntityNotFoundException;
+import org.example.bookstore.exception.OrderException;
 import org.example.bookstore.mapper.OrderItemsMapper;
 import org.example.bookstore.mapper.OrderMapper;
 import org.example.bookstore.model.CartItem;
@@ -20,6 +20,7 @@ import org.example.bookstore.model.OrderItem;
 import org.example.bookstore.model.ShoppingCart;
 import org.example.bookstore.model.User;
 import org.example.bookstore.model.order.Order;
+import org.example.bookstore.model.roles.RoleName;
 import org.example.bookstore.model.status.OrderStatus;
 import org.example.bookstore.repository.cartitem.CartItemRepository;
 import org.example.bookstore.repository.order.OrderRepository;
@@ -43,7 +44,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public OrderResponseDto createNewOrder(OrderRequestDto requestDto, Long userId) {
+    public OrderResponseDto createNewOrder(
+            OrderRequestDto requestDto,
+            Long userId) {
         User user = userService.getUserById(userId);
         ShoppingCart shoppingCart = shoppingCartService.getShoppingCartByUserId(user.getId());
         Set<CartItem> cartItems = shoppingCart.getCartItems();
@@ -71,7 +74,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<OrderResponseDto> getAllUserOrders(Long userId, Pageable pageable) {
+    public List<OrderResponseDto> getAllUserOrders(
+            Long userId,
+            Pageable pageable) {
         User user = userService.getUserById(userId);
         List<Order> ordersByUserId = orderRepository.findAllByUserId(user.getId());
         return ordersByUserId.stream()
@@ -81,31 +86,64 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<OrderItemResponseDto> getAllItemsByOrderId(Long orderId) {
-        Order order = getOrderById(orderId);
-        Set<OrderItem> orderItems = order.getOrderItems();
+    public List<OrderItemResponseDto> getAllItemsByOrderId(
+            Long orderId,
+            Long userId) {
+        User user = userService.getUserById(userId);
+        boolean checkUserRole = checkUserRole(user);
 
-        return orderItems.stream()
-                .map(orderItemsMapper::toDto)
+        if (checkUserRole) {
+            Order order = orderRepository.findById(orderId).orElseThrow(
+                    () -> new OrderException("order with id: " + orderId + "does not exist"));
+            Set<OrderItem> orderItems = order.getOrderItems();
+            return orderItems.stream().map(orderItemsMapper::toDto).toList();
+        }
+
+        List<Order> allByUserId = orderRepository.findAllByUserId(user.getId());
+        Order order = allByUserId.stream()
+                .filter(o -> orderId.equals(o.getId()))
+                .findFirst().orElseThrow(
+                    () -> new OrderException("User dont have order with id: " + orderId));
+        return order.getOrderItems()
+                .stream()
+                .map((orderItemsMapper::toDto))
                 .toList();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public OrderItemResponseDto getItemByOrderIdAndItemId(Long orderId, Long itemId) {
-        Order order = getOrderById(orderId);
-        Set<OrderItem> orderItems = order.getOrderItems();
-        return orderItems.stream()
-                .filter(e -> Objects.equals(e.getId(), itemId))
-                .map(orderItemsMapper::toDto)
+    public OrderItemResponseDto getItemByOrderIdAndItemId(
+            Long orderId,
+            Long itemId,
+            Long userId) {
+        User user = userService.getUserById(userId);
+
+        boolean isAdmin = checkUserRole(user);
+        Order order;
+
+        if (isAdmin) {
+            order = orderRepository.findById(orderId).orElseThrow(() -> new OrderException(
+                    "Order with id: " + orderId + " does not exist"));
+        } else {
+            order = orderRepository.findByUserIdAndId(userId, orderId).orElseThrow(
+                    () -> new OrderException(
+                    "Order with id: " + orderId + " does not exist for the user"));
+        }
+
+        OrderItem orderItem = order.getOrderItems().stream()
+                .filter(i -> i.getId().equals(itemId))
                 .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Can't find item by id: " + itemId));
+                .orElseThrow(() -> new OrderException(
+                        "Item with id: " + itemId + " does not exist in the order"));
+
+        return orderItemsMapper.toDto(orderItem);
     }
 
     @Override
     @Transactional
-    public OrderUpdatedDto changeStatusOfOrderById(Long orderId,
-                                                   OrderStatusUpdateRequestDto request) {
+    public OrderUpdatedDto changeStatusOfOrderById(
+            Long orderId,
+            OrderStatusUpdateRequestDto request) {
         Order order = getOrderById(orderId);
         order.setStatus(OrderStatus.valueOf(request.getStatus()));
         Order savedOrder = orderRepository.save(order);
@@ -125,7 +163,9 @@ public class OrderServiceImpl implements OrderService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private OrderItem mapToOrderItem(CartItem cartItem, Order order) {
+    private OrderItem mapToOrderItem(
+            CartItem cartItem,
+            Order order) {
         OrderItem orderItem = new OrderItem();
         orderItem.setOrder(order);
         orderItem.setBook(cartItem.getBook());
@@ -133,5 +173,10 @@ public class OrderServiceImpl implements OrderService {
         orderItem.setPrice(cartItem.getBook().getPrice()
                 .multiply(BigDecimal.valueOf(cartItem.getQuantity())));
         return orderItem;
+    }
+
+    private boolean checkUserRole(User user) {
+        return user.getRoles().stream()
+                .anyMatch(role -> role.getName().equals(RoleName.ADMIN));
     }
 }

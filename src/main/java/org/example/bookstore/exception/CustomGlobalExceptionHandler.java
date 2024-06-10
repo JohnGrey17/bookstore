@@ -38,17 +38,13 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(body, headers, status);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    protected ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex) {
-        HttpStatus status = HttpStatus.NOT_FOUND;
-        Map<String, Object> body = createErrorMessageBody(status, ex.getMessage());
-        return new ResponseEntity<>(body, status);
-    }
-
     @ExceptionHandler({
+            EntityNotFoundException.class,
             EmptyCartException.class,
             RegistrationException.class,
-            CategoryException.class
+            CategoryException.class,
+            OrderException.class,
+            ShoppingCartException.class
     })
     protected ResponseEntity<Object> handleBadRequestExceptions(RuntimeException ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;

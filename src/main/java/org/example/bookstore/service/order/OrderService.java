@@ -9,14 +9,24 @@ import org.example.bookstore.dto.orderitemdto.OrderItemResponseDto;
 import org.springframework.data.domain.Pageable;
 
 public interface OrderService {
-    OrderResponseDto createNewOrder(OrderRequestDto requestDto,
-                                    Long userId);
+    OrderResponseDto createNewOrder(
+            OrderRequestDto requestDto,
+            Long userId);
 
-    List<OrderResponseDto> getAllUserOrders(Long userid,Pageable pageable);
+    List<OrderResponseDto> getAllUserOrders(
+            Long userid,
+            Pageable pageable);
 
-    List<OrderItemResponseDto> getAllItemsByOrderId(Long orderId);
+    List<OrderItemResponseDto> getAllItemsByOrderId(
+            Long orderId,
+            Long userId);
 
-    OrderItemResponseDto getItemByOrderIdAndItemId(Long orderId, Long itemId);
+    OrderItemResponseDto getItemByOrderIdAndItemId(
+            Long orderId,
+            Long itemId,
+            Long userId);
 
-    OrderUpdatedDto changeStatusOfOrderById(Long orderId, OrderStatusUpdateRequestDto request);
+    OrderUpdatedDto changeStatusOfOrderById(
+            Long orderId,
+            OrderStatusUpdateRequestDto request);
 }
