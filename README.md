@@ -41,12 +41,12 @@ Ensure you have the following installed on your machine:
 
 **To run the application locally, follow these steps:**
 
-1. **Clone** **the** **Repository**
+1. Clone the Repository
 
     [GitHub](https://github.com/JohnGrey17/bookStore.git)
-2. **Set up MySQL:**
+2. Set up MySQL:
     Create a new MySQL database and note the database URL, username, and password.
-3. **Configure environment variables: Create a .env file in the project root directory and use that variables:**        
+3. Configure environment variables: Create a .env file in the project root directory and use that variables:        
 ```
 MYSQL_DATABASE=your_db_name
 MYSQL_USER_NAME=your_db_user_name  
