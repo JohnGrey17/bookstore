@@ -4,6 +4,7 @@ import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.example.bookstore.dto.userdto.UserRegistrationRequestDto;
 import org.example.bookstore.dto.userdto.UserResponseDto;
+import org.example.bookstore.exception.EntityNotFoundException;
 import org.example.bookstore.exception.RegistrationException;
 import org.example.bookstore.mapper.UserMapper;
 import org.example.bookstore.model.User;
@@ -42,5 +43,11 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         shoppingCartService.createNewShoppingCart(user);
         return userMapper.toDto(user);
+    }
+
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "User with id: " + userId + " does not exist"));
     }
 }

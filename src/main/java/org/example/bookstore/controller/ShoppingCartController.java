@@ -13,6 +13,7 @@ import org.example.bookstore.service.shoppingcart.ShoppingCartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,31 +34,41 @@ public class ShoppingCartController {
     @PostMapping
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @Operation(summary = "Add Book to Shopping Cart", description = "Add a book to the user's "
-            + "shopping cart.")
-    public ShoppingCartResponseDto addBookToShoppingCart(Authentication authentication,
-                                                         @RequestBody @Valid
-                                                         CartItemRequestDto
-                                                                 cartItemRequestDto) {
+            + "shopping cart. Only authorized user and admin can do that ")
+    public ShoppingCartResponseDto addBookToShoppingCart(
+            Authentication authentication,
+            @RequestBody @Valid CartItemRequestDto cartItemRequestDto) {
         User user = (User) authentication.getPrincipal();
         return shoppingCartService.addBookToCartItem(user.getId(), cartItemRequestDto);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @Operation(summary = "Get Shopping Cart", description = "Get all shopping cart content "
+            + "of user")
+    public ShoppingCartResponseDto getShoppingCartInfo(
+            @AuthenticationPrincipal User user) {
+        return shoppingCartService.getShoppingCart(user.getId());
+    }
+
+    @GetMapping("/{cartId}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Get User's Shopping Cart", description = "Retrieve the user's "
             + "shopping cart by user ID.")
-    public ShoppingCartResponseDto getUserShoppingCartById(@PathVariable Long userId) {
-        return shoppingCartService.getUserShoppingCartById(userId);
+    public ShoppingCartResponseDto getUserShoppingCartById(
+            @PathVariable Long cartId) {
+        return shoppingCartService.getUserShoppingCartById(cartId);
     }
 
     @PutMapping("/cart-items/{cartItemId}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    @Operation(summary = "Update Cart Item", description = "Update a cart item with "
-            + "the given ID.")
-    public ShoppingCartUpdatedDto updateCartItem(@PathVariable Long cartItemId,
-                                                 @RequestBody @Valid
-                                                 CartItemUpdateDto updateDto) {
-        return shoppingCartService.updateCartItemById(cartItemId, updateDto);
+    @Operation(summary = "Update Cart Item", description =
+            "Update a quantity in cartItem with " + "the given ID.")
+    public ShoppingCartUpdatedDto updateCartItemQuantity(
+            @PathVariable Long cartItemId,
+            @RequestBody @Valid CartItemUpdateDto updateDto,
+            @AuthenticationPrincipal User user) {
+        return shoppingCartService.updateCartItemById(cartItemId, updateDto, user.getId());
     }
 
     @DeleteMapping("/cart-items/{cartItemId}")
@@ -65,7 +76,9 @@ public class ShoppingCartController {
     @Operation(summary = "Delete Cart Item", description = "Delete a cart item "
             + "with the given ID.")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteCartItemById(@PathVariable Long cartItemId) {
-        shoppingCartService.deleteCartById(cartItemId);
+    public void deleteCartItemById(
+            @PathVariable Long cartItemId,
+            @AuthenticationPrincipal User user) {
+        shoppingCartService.deleteCartById(cartItemId, user.getId());
     }
 }

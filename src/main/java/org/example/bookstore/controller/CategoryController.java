@@ -61,8 +61,9 @@ public class CategoryController {
     @PutMapping("/{id}")
     @Operation(summary = "Update category by id", description = "Get category by id "
             + "and update property")
-    public CategoryResponseDto updateCategory(@PathVariable Long id, @RequestBody CategoryRequestDto
-            requestDto) {
+    public CategoryResponseDto updateCategory(
+            @PathVariable Long id,
+            @RequestBody CategoryRequestDto requestDto) {
         return categoryService.update(id, requestDto);
     }
 
@@ -80,7 +81,8 @@ public class CategoryController {
     @Operation(summary = "Get all books by category id", description = "Get all books that "
             + "relate to specified category")
     public List<BookDtoWithoutCategoryIds> getBooksByCategory(
-            @PathVariable Long id, Pageable pageable
+            @PathVariable Long id,
+            Pageable pageable
     ) {
         return bookService.findAllByCategoryId(id,pageable);
     }
