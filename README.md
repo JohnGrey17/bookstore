@@ -28,6 +28,7 @@ The main idea was to create a functionality that would allow performing the func
 * After the User presses "create a new order," all books from the shopping cart are marked as deleted and removed from the shopping cart, making it empty again.
 * The new order gets the status (Pending), and after the user receives the order, the administrator can change the status to (Completed).
   In the future, users can check information about previous orders.
+  [🔝Back to Content](#content-of-presentation)
 
 ## How to Run the Application
 
@@ -97,6 +98,7 @@ You can access the API documentation provided by Swagger at:
 ```
 http://localhost:8080/swagger-ui/
 ```
+[🔝Back to Content](#content-of-presentation)
 ## Functionality
 
 _The API provides the following functionalities:_
@@ -280,7 +282,7 @@ You can find collections of API request here
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ---
-
+[🔝Back to Content](#content-of-presentation)
 ## Challenges Faced During Development
 
 Developing the BookStore project was an enriching experience, but it also came with its own set of challenges. Here are some of the key challenges I faced and the strategies I used to overcome them:
@@ -337,7 +339,7 @@ Developing the BookStore project was an enriching experience, but it also came w
 * I also used proper HTTP status codes to indicate the outcome of API requests, providing a better user experience.
 
 By addressing these challenges with appropriate solutions, I was able to create a robust and scalable BookStore application that provides a seamless experience for both administrators and users.
-
+[🔝Back to Content](#content-of-presentation)
 ## Technologies
 
 - Java
@@ -348,3 +350,5 @@ By addressing these challenges with appropriate solutions, I was able to create 
 - Docker for containerization
 - Liquibase for database schema management
 - CustomGlobalExceptionHandler for error handling
+  [🔝Back to Content](#content-of-presentation)
+- 
