@@ -28,8 +28,9 @@ The main idea was to create a functionality that would allow performing the func
 * After the User presses "create a new order," all books from the shopping cart are marked as deleted and removed from the shopping cart, making it empty again.
 * The new order gets the status (Pending), and after the user receives the order, the administrator can change the status to (Completed).
   In the future, users can check information about previous orders.
-  
-[🔝Back to Content](#content-of-presentation)
+
+<a href="#content-of-presentation"><img src="Logo/left-arrow.png" width="20" height="20"></a>
+
 
 ## How to Run the Application
 
