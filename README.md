@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Logo/hedgehog-reading-books.gif" alt="Logo" width="400"/>
+  <img src="Logo/9170_3b36_400.gif" alt="Logo" width="400"/>
 </p>
 
 # JAVA-BOOKSTORE
