@@ -55,14 +55,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookResponseDto> findAll(Pageable pageable) {
-        return bookRepository.findAll().stream()
+        return bookRepository.findAllWithCategories().stream()
                 .map(bookMapper::toDto)
                 .toList();
     }
 
     @Override
     public BookResponseDto getBookById(Long id) {
-        return bookRepository.findById(id).stream()
+        return bookRepository.findByIdWithCategories(id).stream()
                 .map(bookMapper::toDto)
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -71,7 +71,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public BookResponseDto updateBookById(Long id, BookRequestDto updatedBookDto) {
+    public BookResponseDto updateBookById(
+            Long id,
+            BookRequestDto updatedBookDto) {
         Book existingBook = bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Book not found with id: " + id));
@@ -102,7 +104,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookResponseDto> search(BookSearchParameters parameters, Pageable pageable) {
+    @Transactional()
+    public List<BookResponseDto> search(
+            BookSearchParameters parameters,
+            Pageable pageable) {
         Specification<Book> bookSpecification = bookSpecificationBuilder.build(parameters);
         return bookRepository.findAll(bookSpecification).stream()
                 .map(bookMapper::toDto)
@@ -118,13 +123,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDtoWithoutCategoryIds> findAllByCategoryId(Long categoryId, Pageable pageable) {
+    public List<BookDtoWithoutCategoryIds> findAllByCategoryId(
+            Long categoryId,
+            Pageable pageable) {
         return bookRepository.findAllByCategoryId(categoryId, pageable).stream()
                 .map(bookMapper::toDtoWithoutCategoryIds)
                 .collect(Collectors.toList());
     }
 
-    private Set<Long> findMissingCategoryIds(Set<Long> categoryIds, List<Category> categories) {
+    private Set<Long> findMissingCategoryIds(
+            Set<Long> categoryIds,
+            List<Category> categories) {
         Set<Long> foundCategoryIds = categories.stream()
                 .map(Category::getId)
                 .collect(Collectors.toSet());

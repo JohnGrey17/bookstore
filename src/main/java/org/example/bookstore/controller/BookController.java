@@ -27,12 +27,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/books")
 @Tag(name = "Book Controller", description = "This controller handles requests "
         + "and responses related to books in the database")
-public class BookControllerImpl {
+public class BookController {
 
     private final BookService bookService;
 
     @GetMapping
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get all books", description = "Get all existing books from DB")
     public List<BookResponseDto> getAllBooks(Pageable pageable) {
         return bookService.findAll(pageable);
@@ -40,6 +41,7 @@ public class BookControllerImpl {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get book by id", description = "Get existing book by id")
     public BookResponseDto getBookById(@PathVariable Long id) {
         return bookService.getBookById(id);
@@ -54,20 +56,24 @@ public class BookControllerImpl {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Update book by id", description = "Update existing book "
             + "by id with valid parameters")
-    public BookResponseDto updateBookById(@PathVariable Long id,
-                                          @Valid @RequestBody BookRequestDto book) {
+    public BookResponseDto updateBookById(
+            @PathVariable Long id,
+            @Valid @RequestBody BookRequestDto book) {
         return bookService.updateBookById(id, book);
     }
 
     @GetMapping("/search")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Search books", description = "Search for books based"
             + " on specified parameters.")
-    public List<BookResponseDto> search(BookSearchParameters searchParameters, Pageable pageable) {
+    public List<BookResponseDto> search(
+            BookSearchParameters searchParameters,
+            Pageable pageable) {
         return bookService.search(searchParameters, pageable);
     }
 

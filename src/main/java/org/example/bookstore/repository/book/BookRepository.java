@@ -12,8 +12,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BookRepository extends JpaRepository<Book,Long>, JpaSpecificationExecutor<Book> {
 
+    @Query("SELECT b FROM Book b JOIN FETCH b.categories")
+    List<Book> findAllWithCategories();
+
     Optional<Book> findByIsbn(String isbn);
 
+    @Query("SELECT b FROM Book b JOIN FETCH b.categories WHERE b.id = :bookId")
+    Optional<Book> findByIdWithCategories(Long bookId);
+
     @Query("FROM Book b JOIN FETCH b.categories c WHERE c.id = :categoryId")
-    List<Book> findAllByCategoryId(Long categoryId,Pageable pageable);
+    List<Book> findAllByCategoryId(
+            Long categoryId,
+            Pageable pageable);
 }

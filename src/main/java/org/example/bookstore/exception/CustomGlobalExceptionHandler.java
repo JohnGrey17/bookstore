@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -31,34 +32,35 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         body.put("status", HttpStatus.BAD_REQUEST);
         List<String> errors = ex.getBindingResult()
                 .getAllErrors().stream()
-                .map(this::getErrorMassage)
+                .map(this::getErrorMessage)
                 .toList();
         body.put("errors", errors);
         return new ResponseEntity<>(body, headers, status);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    protected ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex) {
-        HttpStatus status = HttpStatus.NOT_FOUND;
-        Map<String, Object> body = createErrorMessageBody(status, ex.getMessage());
-        return new ResponseEntity<>(body, status);
-    }
-
-    @ExceptionHandler(RegistrationException.class)
-    protected ResponseEntity<Object> handleRegistrationException(RegistrationException ex) {
+    @ExceptionHandler({
+            EntityNotFoundException.class,
+            EmptyCartException.class,
+            RegistrationException.class,
+            CategoryException.class,
+            OrderException.class,
+            ShoppingCartException.class
+    })
+    protected ResponseEntity<Object> handleBadRequestExceptions(RuntimeException ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         Map<String, Object> body = createErrorMessageBody(status, ex.getMessage());
         return new ResponseEntity<>(body, status);
     }
 
-    @ExceptionHandler(CategoryException.class)
-    protected ResponseEntity<Object> handleCategoryException(RegistrationException ex) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    protected ResponseEntity<Object> handleDataIntegrityViolationException(
+            DataIntegrityViolationException ex) {
+        HttpStatus status = HttpStatus.CONFLICT;
         Map<String, Object> body = createErrorMessageBody(status, ex.getMessage());
         return new ResponseEntity<>(body, status);
     }
 
-    private String getErrorMassage(ObjectError e) {
+    private String getErrorMessage(ObjectError e) {
         if (e instanceof FieldError) {
             String field = ((FieldError) e).getField();
             String message = e.getDefaultMessage();
