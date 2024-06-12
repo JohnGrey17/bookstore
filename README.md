@@ -8,13 +8,14 @@
 
 I am pleased to present to you my BookStore project. I approached the creation of this project with great responsibility and attention to detail. In it, I have implemented all the basic functions that an online store should have so that every book lover can easily find the books they are interested in and order them with just a few clicks.
 
-
 ## Content of presentation
+
 - [Description of the project](#description-of-the-project)
 - [How to Run the Application](#how-to-run-the-application)
 - [Functionality](#functionality)
 - [Challenges Faced During Development](#challenges-faced-during-development)
 - [Technologies](#technologies)
+- [My Social media](#LinkedIn)
 
 ## Description of the project
 
@@ -31,7 +32,6 @@ The main idea was to create a functionality that would allow performing the func
 
 <a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
 
-
 ## How to Run the Application
 
 **Prerequisites**
@@ -46,10 +46,11 @@ Ensure you have the following installed on your machine:
 
 1. Clone the Repository
 
-    [GitHub](https://github.com/JohnGrey17/bookStore.git)
+   [GitHub](https://github.com/JohnGrey17/bookStore.git)
 2. Set up MySQL:
-    Create a new MySQL database and note the database URL, username, and password.
-3. Configure environment variables: Create a .env file in the project root directory and use that variables:        
+   Create a new MySQL database and note the database URL, username, and password.
+3. Configure environment variables: Create a .env file in the project root directory and use that variables:
+
 ```
 MYSQL_DATABASE=your_db_name
 MYSQL_USER_NAME=your_db_user_name  
@@ -71,22 +72,29 @@ JWT_SECRET=bigmateacedemysecretfeb24blablablablablaoiuluzichervonakaluna
 JWT_EXPIRATION=3000000000000000000
 
 ```
+
 4. nstall dependencies and build the project:
 
 ```
 mvn clean install
 ```
+
 5. Run the application:
+
 ```
 mvn spring-boot:run
 ```
 
 **Using Docker**
+
 1. Build the Docker image:
+
 ```
-docker build -t bookStore .
+docker build -t bookstore .
 ```
+
 2. Build and Run the Docker Containers:
+
 ```
 docker-compose up
 ```
@@ -101,8 +109,8 @@ You can access the API documentation provided by Swagger at:
 http://localhost:8080/swagger-ui/
 ```
 
-
 <a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
+
 ## Functionality
 
 _The API provides the following functionalities:_
@@ -287,8 +295,8 @@ You can find collections of API request here
 
 ---
 
-
 <a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
+
 ## Challenges Faced During Development
 
 Developing the BookStore project was an enriching experience, but it also came with its own set of challenges. Here are some of the key challenges I faced and the strategies I used to overcome them:
@@ -347,16 +355,31 @@ Developing the BookStore project was an enriching experience, but it also came w
 By addressing these challenges with appropriate solutions, I was able to create a robust and scalable BookStore application that provides a seamless experience for both administrators and users.
 
 <a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
+
 ## Technologies
 
-- Java
-- Spring Boot
-- JWT for authentication
-- MapStruct for DTO mapping
-- Swagger for API documentation
-- Docker for containerization
-- Liquibase for database schema management
-- CustomGlobalExceptionHandler for error handling
+Here are the main technologies I used in the development of this project:
+
+- **Java 17:** The core programming language used for developing the application, leveraging its modern features and improvements.
+- **Spring Boot:** A framework that simplifies the development of Java applications, providing features like dependency injection, aspect-oriented programming, and built-in support for various functionalities.
+- **Spring Security:** Used to handle authentication and authorization, providing a robust security framework for managing user roles and permissions.
+- **JWT (JSON Web Tokens):** Used for securely transmitting information between the client and server, ensuring the integrity and authenticity of user sessions.
+- **Hibernate ORM:** A framework for mapping Java objects to database tables, simplifying database interactions and providing an abstraction layer for CRUD operations.
+- **Swagger:** Used for API documentation, providing an interactive interface to explore and test the API endpoints.
+- **Docker:** Used to containerize the application, ensuring consistency across different environments and simplifying the deployment process.
+- **MySQL:** A relational database management system used to store and manage application data.
+- **Liquibase:** Helped me to control the workflow with database table changes and versioning. It allowed me to manage and track database schema changes efficiently, ensuring smooth migrations and consistent database states across different environments.
+
+These technologies, combined with best practices in software development, allowed me to create a robust, secure, and user-friendly bookstore application.
 
 <a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
- 
+
+## LinkedIn
+
+<a href="https://www.linkedin.com/in/serj-gainovskyi-58b631215/">
+    <img src="Logo/logo-hero.png" alt="BookStore Logo" width="200"/>
+</a>
+
+
+
+<a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
