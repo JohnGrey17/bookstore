@@ -45,7 +45,8 @@ Ensure you have the following installed on your machine:
 **To run the application locally, follow these steps:**
 
 1. Clone the repository from here
-   <a href="https://github.com/jv-feb24-group-project2/accommodation-booking-app">
+   
+  <a href="https://github.com/jv-feb24-group-project2/accommodation-booking-app">
    <img src="Logo/GitHub.png" width="100"/>
    </a>
 
