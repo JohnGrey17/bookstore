@@ -45,14 +45,16 @@ Ensure you have the following installed on your machine:
 **To run the application locally, follow these steps:**
 
 1. Clone the repository from here
-   
-  <a href="https://github.com/jv-feb24-group-project2/accommodation-booking-app">
-   <img src="Logo/GitHub.png" width="100"/>
-   </a>
 
-2. Set up MySQL:
+      <a href="https://github.com/jv-feb24-group-project2/accommodation-booking-app">
+       <img src="Logo/GitHub.png" width="100"/>
+       </a>
+
+
+3. Set up MySQL:
    Create a new MySQL database and note the database URL, username, and password.
 3. Configure environment variables: Create a .env file in the project root directory and use that variables:
+
 ```
 MYSQL_DATABASE=your_db_name
 MYSQL_USER_NAME=your_db_user_name  
