@@ -290,7 +290,10 @@ Body
 
 You can find collections of API request here
 
-[POSTMAN COLLECTION](https://www.postman.com/rent-masters/workspace/online-book-store/collection/34439794-e43a7180-a360-47f8-86fa-fe7a81f5742e?action=share&source=copy-link&creator=34439794)
+<a href="https://www.postman.com/rent-masters/workspace/online-book-store/collection/34439794-e43a7180-a360-47f8-86fa-fe7a81f5742e?action=share&source=copy-link&creator=34439794">
+    <img src="Logo/images.png" alt="BookStore Logo" width="200"/>
+</a>
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ---
