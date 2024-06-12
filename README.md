@@ -15,7 +15,7 @@ I am pleased to present to you my BookStore project. I approached the creation o
 - [Functionality](#functionality)
 - [Challenges Faced During Development](#challenges-faced-during-development)
 - [Technologies](#technologies)
-- [My Social media](#LinkedIn)
+- [My Social media](#Social-Media)
 
 ## Description of the project
 
@@ -44,12 +44,10 @@ Ensure you have the following installed on your machine:
 
 **To run the application locally, follow these steps:**
 
-1. Clone the Repository
+1. Clone the repository from here
 
-   [GitHub](https://github.com/JohnGrey17/bookStore.git)
-2. Set up MySQL:
-   Create a new MySQL database and note the database URL, username, and password.
-3. Configure environment variables: Create a .env file in the project root directory and use that variables:
+   <a href="https://github.com/JohnGrey17/bookStore">
+    <img src="Logo/GitHub.png" alt="BookStore Logo" width="100"/>
 
 ```
 MYSQL_DATABASE=your_db_name
@@ -294,7 +292,7 @@ You can find collections of API request here
     <img src="Logo/images.png" alt="BookStore Logo" width="200"/>
 </a>
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---
 
 ---
 
@@ -377,12 +375,10 @@ These technologies, combined with best practices in software development, allowe
 
 <a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
 
-## LinkedIn
+## Social Media
 
 <a href="https://www.linkedin.com/in/serj-gainovskyi-58b631215/">
     <img src="Logo/logo-hero.png" alt="BookStore Logo" width="200"/>
 </a>
-
-
 
 <a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
