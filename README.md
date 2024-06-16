@@ -11,6 +11,7 @@ I am pleased to present to you my BookStore project. I approached the creation o
 ## Content of presentation
 
 - [Description of the project](#description-of-the-project)
+- [Video presentation]($Video-presentation)
 - [How to Run the Application](#how-to-run-the-application)
 - [Functionality](#functionality)
 - [Challenges Faced During Development](#challenges-faced-during-development)
@@ -32,6 +33,17 @@ The main idea was to create a functionality that would allow performing the func
 
 <a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
 
+
+## Video presentation
+
+<a href="https://www.youtube.com/watch?v=jipqlB--4as&t=7s">
+       <img src="Logo/youtube.jpg" width="100"/>
+       </a>
+
+
+
+<a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
+
 ## How to Run the Application
 
 **Prerequisites**
@@ -46,12 +58,10 @@ Ensure you have the following installed on your machine:
 
 1. Clone the repository from here
 
-      <a href="https://github.com/jv-feb24-group-project2/accommodation-booking-app">
+   <a href="https://github.com/jv-feb24-group-project2/accommodation-booking-app">
        <img src="Logo/GitHub.png" width="100"/>
        </a>
-
-
-3. Set up MySQL:
+2. Set up MySQL:
    Create a new MySQL database and note the database URL, username, and password.
 3. Configure environment variables: Create a .env file in the project root directory and use that variables:
 
