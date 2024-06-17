@@ -70,7 +70,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public ShoppingCartResponseDto getShoppingCart(Long userId) {
         ShoppingCart shoppingCart = shoppingCartRepository
                 .findShoppingCartByUserId(userId).orElseThrow(
-                    () -> new ShoppingCartException("You don`t have ShoppingCart"));
+                        () -> new ShoppingCartException("You don`t have ShoppingCart"));
         return shoppingCartMapper.toDto(shoppingCart);
     }
 
@@ -85,7 +85,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 .filter(c -> c.getShoppingCart().getUser().getId() == userId)
                 .findFirst()
                 .orElseThrow(() -> new ShoppingCartException(
-                                "User don`t have cart item with id: " + cartItemId));
+                        "User don`t have cart item with id: " + cartItemId));
 
         cartItem.setQuantity(updateDto.getQuantity());
         cartItemRepository.save(cartItem);
@@ -102,7 +102,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         CartItem cartItem = cartItemRepository.findById(cartItemId).stream()
                 .filter(c -> c.getShoppingCart().getUser().getId() == userId)
                 .findFirst().orElseThrow(() -> new ShoppingCartException(
-                                "User don`t have cart item with id: " + cartItemId));
+                        "User don`t have cart item with id: " + cartItemId));
 
         cartItemRepository.deleteById(cartItem.getId());
     }
