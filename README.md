@@ -58,7 +58,7 @@ Ensure you have the following installed on your machine:
 
 1. Clone the repository from here
 
-   <a href="https://github.com/jv-feb24-group-project2/accommodation-booking-app">
+   <a href="https://github.com/JohnGrey17/bookStore">
        <img src="images/GitHub.png" width="100"/>
        </a>
 2. Set up MySQL:
