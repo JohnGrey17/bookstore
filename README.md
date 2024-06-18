@@ -42,7 +42,7 @@ The main idea was to create a functionality that would allow performing the func
 
 
 
-<a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
+<a href="#content-of-presentation"><images/back.png" width="20" height="20"></a>
 
 ## How to Run the Application
 
@@ -123,7 +123,7 @@ You can access the API documentation provided by Swagger at:
 http://localhost:8080/swagger-ui/
 ```
 
-<a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
+<a href="#content-of-presentation"><img src="images/back.png" width="20" height="20"></a>
 
 ## Functionality
 
@@ -312,7 +312,7 @@ You can find collections of API request here
 
 ---
 
-<a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
+<a href="#content-of-presentation"><img src="images/back.png" width="20" height="20"></a>
 
 ## Challenges Faced During Development
 
@@ -371,7 +371,7 @@ Developing the BookStore project was an enriching experience, but it also came w
 
 By addressing these challenges with appropriate solutions, I was able to create a robust and scalable BookStore application that provides a seamless experience for both administrators and users.
 
-<a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
+<a href="#content-of-presentation"><img src="images/back.png" width="20" height="20"></a>
 
 ## Technologies
 
@@ -389,7 +389,7 @@ Here are the main technologies I used in the development of this project:
 
 These technologies, combined with best practices in software development, allowed me to create a robust, secure, and user-friendly bookstore application.
 
-<a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
+<a href="#content-of-presentation"><img src="images/back.png" width="20" height="20"></a>
 
 ## Social Media
 
@@ -397,4 +397,4 @@ These technologies, combined with best practices in software development, allowe
     <img src="images/LinkedIn.png" alt="BookStore Logo" width="200"/>
 </a>
 
-<a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
+<a href="#content-of-presentation"><img src="images/back.png" width="20" height="20"></a>
