@@ -397,4 +397,5 @@ These technologies, combined with best practices in software development, allowe
     <img src="images/LinkedIn.png" alt="BookStore Logo" width="200"/>
 </a>
 
+
 <a href="#content-of-presentation"><img src="images/back.png" width="20" height="20"></a>
