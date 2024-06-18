@@ -31,7 +31,7 @@ The main idea was to create a functionality that would allow performing the func
 * The new order gets the status (Pending), and after the user receives the order, the administrator can change the status to (Completed).
   In the future, users can check information about previous orders.
 
-<a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
+<a href="#content-of-presentation"><img src="images/back.png" width="20" height="20"></a>
 
 
 ## Video presentation
@@ -42,7 +42,7 @@ The main idea was to create a functionality that would allow performing the func
 
 
 
-<a href="#content-of-presentation"><images/back.png" width="20" height="20"></a>
+<a href="#content-of-presentation"><img src="images/back.png" width="20" height="20"></a>
 
 ## How to Run the Application
 
