@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Logo/9170_3b36_400.gif" alt="Logo" width="400"/>
+  <img src="images/TitleImage.gif" alt="Logo" width="400"/>
 </p>
 
 # JAVA-BOOKSTORE
@@ -37,7 +37,7 @@ The main idea was to create a functionality that would allow performing the func
 ## Video presentation
 
 <a href="https://www.youtube.com/watch?v=jipqlB--4as&t=7s">
-       <img src="Logo/youtube.jpg" width="100"/>
+       <img src="images/youtube.jpg" width="100"/>
        </a>
 
 
@@ -59,7 +59,7 @@ Ensure you have the following installed on your machine:
 1. Clone the repository from here
 
    <a href="https://github.com/jv-feb24-group-project2/accommodation-booking-app">
-       <img src="Logo/GitHub.png" width="100"/>
+       <img src="images/GitHub.png" width="100"/>
        </a>
 2. Set up MySQL:
    Create a new MySQL database and note the database URL, username, and password.
@@ -305,7 +305,7 @@ Body
 You can find collections of API request here
 
 <a href="https://www.postman.com/rent-masters/workspace/online-book-store/collection/34439794-e43a7180-a360-47f8-86fa-fe7a81f5742e?action=share&source=copy-link&creator=34439794">
-    <img src="Logo/images.png" alt="BookStore Logo" width="200"/>
+    <img src="images/Postman.png" alt="BookStore Logo" width="200"/>
 </a>
 
 ---
@@ -394,7 +394,7 @@ These technologies, combined with best practices in software development, allowe
 ## Social Media
 
 <a href="https://www.linkedin.com/in/serj-gainovskyi-58b631215/">
-    <img src="Logo/logo-hero.png" alt="BookStore Logo" width="200"/>
+    <img src="images/LinkedIn.png" alt="BookStore Logo" width="200"/>
 </a>
 
 <a href="#content-of-presentation"><img src="Logo/back.png" width="20" height="20"></a>
