@@ -59,14 +59,14 @@ public class BookRepositoryTest {
     }
 
     @Test
-    @DisplayName("Find book by ISBN when book does not exist")
+    @DisplayName("Get negative result when book with signed Isbn is not correct")
     @Sql(scripts = {
             "classpath:database/book/add-books-to-books-table.sql"
     }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/book/remove-books-from-books-table.sql"
     }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-    void findByIsbn_BookDoesNotExist() {
+    void findByIsbn_BookDoesNotExist_NegativeResult() {
         Optional<Book> missingBook = bookRepository.findByIsbn(NOT_CORRECT_ISBN);
         Assertions.assertFalse(missingBook.isPresent(), "Book should not be present");
     }

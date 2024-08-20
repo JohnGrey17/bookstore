@@ -3,7 +3,7 @@ package org.example.bookstore.repository;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import org.example.bookstore.repository.cartitem.model.Category;
+import org.example.bookstore.model.Category;
 import org.example.bookstore.repository.category.CategoryRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
