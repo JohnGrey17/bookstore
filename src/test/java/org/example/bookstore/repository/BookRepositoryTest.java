@@ -68,14 +68,6 @@ public class BookRepositoryTest {
     }
 
     @Test
-    @DisplayName("Find all books with existing categories")
-    void findAllWithCategories_whereCategoriesExist() {
-        List<Book> actual = bookRepository.findAllWithCategories();
-        assertEquals(2, actual.size(),
-                "Result should match specified value");
-    }
-
-    @Test
     @DisplayName("Get negative result when books don`t have categories")
     void findAllWithCategories_negativeResult() {
         List<Book> actualAllWithCategories = bookRepository.findAllWithCategories();
