@@ -32,12 +32,10 @@ import org.springframework.test.context.jdbc.Sql;
 public class BookRepositoryTest {
 
     private static final String NOT_CORRECT_ISBN = "978-3-16-148410111-1";
-    private static final Integer LIST_OF_BOOKS_WITH_CATEGORIES_SIZE = 2;
+
     private static final Integer TOTAL_LIST_OF_BOOKS_SIZE = 6;
     private static final Long CORRECT_BOOK_ID = 10L;
     private static final Long INCORRECT_BOOK_ID = 9L;
-    private static final Long CATEGORY_ID = 11L;
-    private static final int EXPECTED_BOOK_COUNT = 5;
 
     @Autowired
     private BookRepository bookRepository;
@@ -73,7 +71,7 @@ public class BookRepositoryTest {
     @DisplayName("Find all books with existing categories")
     void findAllWithCategories_whereCategoriesExist() {
         List<Book> actual = bookRepository.findAllWithCategories();
-        assertEquals(LIST_OF_BOOKS_WITH_CATEGORIES_SIZE,actual.size(),
+        assertEquals(2, actual.size(),
                 "Result should match specified value");
     }
 
