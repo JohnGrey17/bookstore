@@ -46,6 +46,7 @@ public class CategoryController {
     @GetMapping
     @Operation(summary = "Get all category from DB", description =
             "Get all existing categories from DB")
+    @ResponseStatus(HttpStatus.OK)
     public List<CategoryResponseDto> getAll(Pageable pageable) {
         return categoryService.findAll(pageable);
     }
@@ -53,6 +54,7 @@ public class CategoryController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/{id}")
     @Operation(summary = "Get category by id", description = "Get existing category by id")
+    @ResponseStatus(HttpStatus.OK)
     public CategoryResponseDto getCategoryById(@PathVariable Long id) {
         return categoryService.getById(id);
     }
@@ -61,9 +63,9 @@ public class CategoryController {
     @PutMapping("/{id}")
     @Operation(summary = "Update category by id", description = "Get category by id "
             + "and update property")
-    public CategoryResponseDto updateCategory(
-            @PathVariable Long id,
-            @RequestBody CategoryRequestDto requestDto) {
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryResponseDto updateCategory(@PathVariable Long id,
+                                              @RequestBody CategoryRequestDto requestDto) {
         return categoryService.update(id, requestDto);
     }
 
@@ -80,9 +82,9 @@ public class CategoryController {
     @GetMapping("/{id}/books")
     @Operation(summary = "Get all books by category id", description = "Get all books that "
             + "relate to specified category")
+    @ResponseStatus(HttpStatus.OK)
     public List<BookDtoWithoutCategoryIds> getBooksByCategory(
-            @PathVariable Long id,
-            Pageable pageable
+            @PathVariable Long id, Pageable pageable
     ) {
         return bookService.findAllByCategoryId(id,pageable);
     }

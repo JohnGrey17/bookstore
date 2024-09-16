@@ -71,9 +71,7 @@ public class BookController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Search books", description = "Search for books based"
             + " on specified parameters.")
-    public List<BookResponseDto> search(
-            BookSearchParameters searchParameters,
-            Pageable pageable) {
+    public List<BookResponseDto> search(BookSearchParameters searchParameters, Pageable pageable) {
         return bookService.search(searchParameters, pageable);
     }
 
