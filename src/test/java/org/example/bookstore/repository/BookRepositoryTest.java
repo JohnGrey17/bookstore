@@ -37,7 +37,7 @@ public class BookRepositoryTest {
     private static final Long CORRECT_BOOK_ID = 10L;
     private static final Long INCORRECT_BOOK_ID = 9L;
     private static final Long CATEGORY_ID = 11L;
-    private static final int EXPECTED_BOOK_COUNT = 2;
+    private static final int EXPECTED_BOOK_COUNT = 5;
 
     @Autowired
     private BookRepository bookRepository;
@@ -114,9 +114,9 @@ public class BookRepositoryTest {
     @DisplayName("Negative result with incorrect ID")
     void findAllByCategoryId_NegativeResult() {
         Pageable pageable = Pageable.unpaged();
-        List<Book> books = bookRepository.findAllByCategoryId(CATEGORY_ID, pageable);
+        List<Book> books = bookRepository.findAllByCategoryId(9L, pageable);
 
-        assertEquals(EXPECTED_BOOK_COUNT, books.size(),
+        assertEquals(0, books.size(),
                 "The number of books should match the expected count");
     }
 }
