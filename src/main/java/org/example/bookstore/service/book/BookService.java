@@ -14,17 +14,11 @@ public interface BookService {
 
     BookResponseDto getBookById(Long id);
 
-    BookResponseDto updateBookById(
-            Long id,
-            BookRequestDto updatedBook);
+    BookResponseDto updateBookById(Long id, BookRequestDto updatedBook);
 
     void deleteById(Long id);
 
-    List<BookResponseDto> search(
-            BookSearchParameters parameters,
-            Pageable pageable);
+    List<BookResponseDto> search(BookSearchParameters parameters, Pageable pageable);
 
-    List<BookDtoWithoutCategoryIds> findAllByCategoryId(
-            Long id,
-            Pageable pageable);
+    List<BookDtoWithoutCategoryIds> findAllByCategoryId(Long id, Pageable pageable);
 }

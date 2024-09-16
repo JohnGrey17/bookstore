@@ -29,12 +29,13 @@ class CategoryRepositoryTest {
     private static final String INCORRECT_CATEGORIES_NAME = "Rammstein";
 
     @Autowired
-    CategoryRepository categoryRepository;
+     private CategoryRepository categoryRepository;
 
     @Test
     @DisplayName("Find categories by Id")
     void findCategoriesByIds_withExistingId_positiveResult() {
-        List<Category> actualCategories = categoryRepository.findCategoriesByIds(CORRECT_CATEGORIES_ID);
+        List<Category> actualCategories = categoryRepository
+                .findCategoriesByIds(CORRECT_CATEGORIES_ID);
         Assertions.assertNotNull(actualCategories, "Categories should be present");
         Assertions.assertEquals(EXPECTED_CATEGORIES_SIZE, actualCategories.size(),
                 "Result size should be match with expected size");
@@ -43,8 +44,10 @@ class CategoryRepositoryTest {
     @Test
     @DisplayName("Give negative result when the Categories id is wrong")
     void findCategoriesByIds_withNonExistingId_negativeResult() {
-        List<Category> actualCategories = categoryRepository.findCategoriesByIds(INCORRECT_CATEGORIES_ID);
-        Assertions.assertTrue(actualCategories.isEmpty(), "Categories should not be present");
+        List<Category> actualCategories = categoryRepository
+                .findCategoriesByIds(INCORRECT_CATEGORIES_ID);
+        Assertions.assertTrue(actualCategories.isEmpty(),
+                "Categories should not be present");
     }
 
     @Test
@@ -73,7 +76,8 @@ class CategoryRepositoryTest {
     @Test
     @DisplayName("Find categories by Ids with existing Ids - positive case")
     void findCategoriesByIds_existingIds_shouldReturnCategories() {
-        List<Category> actualCategories = categoryRepository.findCategoriesByIds(CORRECT_CATEGORIES_ID);
+        List<Category> actualCategories = categoryRepository
+                .findCategoriesByIds(CORRECT_CATEGORIES_ID);
 
         Assertions.assertNotNull(actualCategories, "Categories should be present");
         Assertions.assertEquals(EXPECTED_CATEGORIES_SIZE, actualCategories.size(),
