@@ -2,7 +2,7 @@
   <img src="images/TitleImage.gif" alt="Logo" width="400"/>
 </p>
 
-# JAVA-BOOKSTORE
+# Order Application
 
 **Introduction**
 
